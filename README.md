@@ -1,3 +1,15 @@
+#Merging to master
+
+When we merge to master, we will do so selectively:
+```
+git checkout master
+git merge --no-ff --no-commit development
+git rm -f <files not required on master>
+git commit -m "merge from development"
+```
+
+#Original README contents
+
 ECE453/SE465/CS447/ECE653/CS647
 Project Skeleton Files
 
