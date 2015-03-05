@@ -1,0 +1,66 @@
+Call graph node <<null function>><<0x11ef870>>  #uses=0
+  CS<0x0> calls function 'main'
+  CS<0x0> calls function 'scope1'
+  CS<0x0> calls function 'scope2'
+  CS<0x0> calls function 'scope3'
+  CS<0x0> calls function 'scope4'
+  CS<0x0> calls function 'scope5'
+  CS<0x0> calls function 'scope6'
+  CS<0x0> calls function 'A'
+  CS<0x0> calls function 'printf'
+  CS<0x0> calls function 'B'
+  CS<0x0> calls function 'C'
+  CS<0x0> calls function 'D'
+
+Call graph node for function: 'main'<<0x11f1390>>  #uses=1
+  CS<0x11efea8> calls function 'scope1'
+  CS<0x11eff28> calls function 'scope2'
+  CS<0x11effa8> calls function 'scope3'
+  CS<0x11f0028> calls function 'scope4'
+  CS<0x11f00a8> calls function 'scope5'
+  CS<0x11f0128> calls function 'scope6'
+
+Call graph node for function: 'scope1'<<0x11ef760>>  #uses=3
+  CS<0x11f0288> calls function 'A'
+  CS<0x11f0308> calls function 'B'
+  CS<0x11f0388> calls function 'C'
+  CS<0x11f0408> calls function 'D'
+
+Call graph node for function: 'scope2'<<0x11ec380>>  #uses=2
+  CS<0x11f0548> calls function 'A'
+  CS<0x11f3028> calls function 'C'
+  CS<0x11f30a8> calls function 'D'
+
+Call graph node for function: 'scope3'<<0x11ec310>>  #uses=2
+  CS<0x11f3188> calls function 'A'
+  CS<0x11f3208> calls function 'B'
+
+Call graph node for function: 'scope4'<<0x11ef3b0>>  #uses=2
+  CS<0x11f3348> calls function 'B'
+  CS<0x11f33c8> calls function 'D'
+  CS<0x11f3448> calls function 'scope1'
+
+Call graph node for function: 'scope5'<<0x11ef420>>  #uses=2
+  CS<0x11f3588> calls function 'B'
+  CS<0x11f3608> calls function 'D'
+  CS<0x11f3688> calls function 'A'
+
+Call graph node for function: 'scope6'<<0x11ef450>>  #uses=2
+  CS<0x11f37c8> calls function 'B'
+  CS<0x11f3848> calls function 'D'
+
+Call graph node for function: 'A'<<0x11ef480>>  #uses=5
+  CS<0x11f3b60> calls function 'printf'
+
+Call graph node for function: 'printf'<<0x11f8000>>  #uses=5
+  CS<0x0> calls external node
+
+Call graph node for function: 'B'<<0x11f7db0>>  #uses=6
+  CS<0x11f3e20> calls function 'printf'
+
+Call graph node for function: 'C'<<0x11ec8e0>>  #uses=3
+  CS<0x11f40e0> calls function 'printf'
+
+Call graph node for function: 'D'<<0x11f7f40>>  #uses=6
+  CS<0x11f43a0> calls function 'printf'
+

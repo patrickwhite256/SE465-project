@@ -1,0 +1,10 @@
+Call graph node <<null function>><<0xfacee0>>  #uses=0
+  CS<0x0> calls function 'main'
+  CS<0x0> calls function 'printf'
+
+Call graph node for function: 'main'<<0xfae8a0>>  #uses=1
+  CS<0xfadfd0> calls function 'printf'
+
+Call graph node for function: 'printf'<<0xfaef90>>  #uses=2
+  CS<0x0> calls external node
+
