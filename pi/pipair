@@ -1,0 +1,5 @@
+#!/bin/bash
+CGFILE=$1.cg
+opt -print-callgraph $1 > /dev/null 2> $CGFILE
+./pipair-core $CGFILE $2 $3
+rm $CGFILE
