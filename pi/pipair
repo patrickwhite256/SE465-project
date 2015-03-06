@@ -1,5 +1,6 @@
 #!/bin/bash
 CGFILE=$1.cg
+PIPAIR_EXEC=$(dirname $BASH_SOURCE)/pipair-core
 opt -print-callgraph $1 > /dev/null 2> $CGFILE
-./pipair-core $CGFILE $2 $3
+$PIPAIR_EXEC $CGFILE $2 $3
 rm $CGFILE
