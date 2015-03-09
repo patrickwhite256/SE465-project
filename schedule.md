@@ -1,4 +1,4 @@
-#Proposed Schedule and Division of Work
+#Schedule and Division of Work
 
 | Component | Completion Date | Patrick Responsibility | Sam Responsibility | Andy Responsibility |
 | --------- | --------------- | ----------------------- | ----------------------- | ----------------------- |
