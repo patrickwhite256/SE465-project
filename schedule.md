@@ -1,6 +1,6 @@
 #Proposed Schedule and Division of Work
 
-| Component | Completion Date | Person A Responsibility | Person B Responsibility | Person C Responsibility |
+| Component | Completion Date | Patrick Responsibility | Sam Responsibility | Andy Responsibility |
 | --------- | --------------- | ----------------------- | ----------------------- | ----------------------- |
 | 1a | March 18 | design of data structures, parsing call graph into data structures | design of data structures, processing data structures into input | generation of test cases |
 | 1b | March 20 | work together | work together | work together |
