@@ -1,7 +1,7 @@
 CXXFLAGS=-Wall -g
 LINK=-lboost_regex
 
-OBJECTS=pipair.o
+OBJECTS=pipair.o parse.o
 
 .PHONY: all clean
 all: pipair-core
