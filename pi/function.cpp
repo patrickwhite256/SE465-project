@@ -1,40 +1,29 @@
 #include "function.h"
 using namespace std;
 
-unordered_map<std::string, Function> functions;
+unordered_map<string, Function> Function::functions;
 
-Function::Function(std::string name){
+Function::Function(string name){
     this->name = name;
 }
 
-void Function::addSupport(std::string other){
-    unordered_map<std::string, int>::iterator it = support.find(other);
-    if(it == support.end()){
-        support[other] = 1;
-    } else {
-        it->second += 1;
-    }
-    it = support.find(name);
-    if(it == support.end()){
-        support[other] = 1;
-    } else {
-        it->second += 1;
-    }
+void Function::addSupport(string other){
+    support[other] += 1;
 }
 
-void Function::addCalls(std::string other){
+void Function::addCalls(string other){
     //TODO: shit
 }
 
-int Function::getSupport(std::string other){
+int Function::getSupport(string other){
     return support[other];
 }
 
-Function getFunction(std::string functionName){
-    unordered_map<std::string, Function>::iterator it = functions.find(functionName);
-    if(it == functions.end()){
+Function *Function::getFunction(string functionName){
+    bool exists = functions.count(functionName) == 1;
+    if(!exists){
         Function newFunction(functionName);
         functions[functionName] = newFunction;
     }
-    return functions[functionName];
+    return &functions[functionName];
 }
