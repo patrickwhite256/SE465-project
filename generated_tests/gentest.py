@@ -116,11 +116,21 @@ for x in xrange(1, MAX_CALLER_NODES + 1):
     caller_name = 'f' + str(x)
     caller = addCallerFunc(caller_name, func_map)
     for y in xrange(0, calls_per_caller):
-        basic_val = x + y
-        if basic_val > 5000:
-            basic_val = (basic_val % 5000)
-        name = 'b_f' + str(basic_val)
-        addCallingRelation(caller, name, func_map)
+        basic_val1 = x + y
+        basic_val2 = x + y + 120
+        basic_val3 = x + y + 240
+        if basic_val1 > 5000:
+            basic_val1 = (basic_val1 % 5000)
+        if basic_val2 > 5000:
+            basic_val2 = (basic_val2 % 5000)
+        if basic_val3 > 5000:
+            basic_val3 = (basic_val3 % 5000)
+        name1 = 'b_f' + str(basic_val1)
+        addCallingRelation(caller, name1, func_map)
+        name2 = 'b_f' + str(basic_val2)
+        addCallingRelation(caller, name2, func_map)
+        name3 = 'b_f' + str(basic_val3)
+        addCallingRelation(caller, name3, func_map)
     for y in xrange(0, calls_per_caller):
         # Call other caller functions. Make sure that they don't call each other
         caller_val = x + y + 1
