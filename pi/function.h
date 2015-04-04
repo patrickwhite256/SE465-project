@@ -2,6 +2,7 @@
 #define FUNCTION_H_
 
 #include <unordered_map>
+#include <string>
 
 class Function {
     static std::unordered_map<std::string, Function> functions;
