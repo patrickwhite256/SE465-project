@@ -20,6 +20,12 @@ void create_support(unordered_set<string> *function_set){
 }
 
 int main(int argc, char **argv){
+    int T_SUPPORT = 3;
+    float T_CONFIDENCE = 0.65;
+    if(argc == 3) {
+        T_SUPPORT = atoi(argv[1]);
+        T_CONFIDENCE = atoi(argv[2]) / 100;
+    }
     string line;
     Function *current_function;
     unordered_set<string> function_set;
