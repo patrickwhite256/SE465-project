@@ -12,7 +12,6 @@ T_SUPPORT = 3
 T_CONFIDENCE = 0.65
 
 # Each function is a node, each function call is an edge.
-# If caller function calls 4 functions, we've reached max
 MAX_BASIC_NODES = 5000
 MAX_CALLER_NODES = 15000
 MAX_EDGES = 60000
@@ -56,9 +55,11 @@ def printMainFunction( func_map ):
     print 'int main() {'
 
     # print all the caller functions
-    for func in func_map:
-        if func_map[func][0] == FuncType.Caller:
-            print INDENT + func + '();'
+    # [1, 336) results in 60031 edges
+    # [1, 335) results in 59685 edges
+    for x in xrange(1, 336):
+        caller_name = 'c_f' + str(x)
+        print INDENT + caller_name + '();'
 
     print INDENT + 'return 0;'
     print '}\n'
