@@ -1,7 +1,6 @@
 #include "function.h"
 
-#include <unordered_map>
-#include <string>
+#include <unordered_set>
 #include <boost/format.hpp>
 #include <iostream>
 
@@ -41,15 +40,31 @@ unordered_map<std::string, Function> *Function::getFunctions(){
 }
 
 void Function::findBugs(){
-    for(auto iterator = calls.begin(); iterator != calls.end(); ++iterator){
-        Function *functionCalled = Function::getFunction(iterator->first);
-        unordered_map<string, int> *functionSupport = functionCalled->getSupportMap();
-        for (auto supportIterator = functionSupport->begin(); supportIterator != functionSupport->end(); ++supportIterator){
-            if(calls.find(supportIterator->first) == calls.end()){
-                float supportValue = (float)(functionCalled->getSupport(supportIterator->first)) / (float)(functionCalled->getSupport(functionCalled->getName()));
-                if (supportValue >= 0.25){
-                    cout << boost::format("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%") % functionCalled->getName() % name % iterator->first % supportIterator->first % functionCalled->getSupport(supportIterator->first) % supportValue << endl;
-                }
+    unordered_map<string, string> aboveThreshold;
+    Function *func, *inner_func;
+    for(auto it = functions.begin(); it != functions.end(); ++it ){
+        func = &(it->second);
+        for(auto inner_it = it; inner_it != functions.end(); ++inner_it){
+            inner_func = &(inner_it->second);
+            float threshold = ((float)(inner_func->getSupport(it->first)) / (float)(inner_func->getSupport(inner_it->first)));
+            if (inner_it != it && threshold > 0.50 && threshold != 1){
+                //cout << threshold << " " << it->first << " " << inner_it->first << endl;
+                string fname1 = it->first, fname2 = inner_it->first;
+                aboveThreshold[fname1] = fname2;
+            }
+        }
+    }
+    for(auto it = functions.begin(); it != functions.end(); ++it){
+        func = &(it->second);
+        for(auto inner_it = aboveThreshold.begin(); inner_it != aboveThreshold.end(); ++inner_it){
+            if((func->getCalls(inner_it->first) && func->getCalls(inner_it->second) < 1 )){
+                inner_func = Function::getFunction(inner_it->first);
+                float threshold = (float)((float)(inner_func->getSupport(inner_it->second)) / (float)(inner_func->getSupport(inner_it->first))) * 100;
+                cout << boost::format("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%") % inner_it->first % it->first % inner_it->first % inner_it->second % inner_func->getSupport(inner_it->second) % threshold << endl;
+            } else if (func->getCalls(inner_it->first) < 1 && func->getCalls(inner_it->second)){
+                inner_func = Function::getFunction(inner_it->second);
+                float threshold = (float)((float)(inner_func->getSupport(inner_it->first)) / (float)(inner_func->getSupport(inner_it->second))) * 100;
+                cout << boost::format("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%") % inner_it->second % it->first % inner_it->second % inner_it->first % inner_func->getSupport(inner_it->second) % threshold << endl;
             }
         }
     }

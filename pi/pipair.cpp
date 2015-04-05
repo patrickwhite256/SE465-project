@@ -47,9 +47,5 @@ int main(int argc, char **argv){
         }
     }
     create_support(&function_set);
-		unordered_map<string, Function> *function_map = current_function->getFunctions();
-		for(auto iterator = function_map->begin(); iterator != function_map->end(); ++iterator){
-        current_function = Function::getFunction(iterator->second.getName());
-        current_function->findBugs();
-    }
+    current_function->findBugs();
 }
