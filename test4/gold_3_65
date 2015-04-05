@@ -1,0 +1,4 @@
+bug: B in #, pair: (A, B), support: 10, confidence: 71.43%
+bug: C in #, pair: (B, C), support: 14, confidence: 87.50%
+bug: D in #, pair: (B, D), support: 7, confidence: 87.50%
+bug: E in #, pair: (B, E), support: 4, confidence: 80.00%
