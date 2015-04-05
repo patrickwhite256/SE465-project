@@ -1,1 +1,2 @@
-bug: C in #, pair: (B, C), support: 14, confidence: 87.50%
+bug: C in call_15, pair: (B, C), support: 14, confidence: 87.50%
+bug: C in call_16, pair: (B, C), support: 14, confidence: 87.50%

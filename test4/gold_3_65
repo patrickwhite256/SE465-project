@@ -1,4 +1,8 @@
-bug: B in #, pair: (A, B), support: 10, confidence: 71.43%
-bug: C in #, pair: (B, C), support: 14, confidence: 87.50%
-bug: D in #, pair: (B, D), support: 7, confidence: 87.50%
-bug: E in #, pair: (B, E), support: 4, confidence: 80.00%
+bug: B in call_11, pair: (A, B), support: 10, confidence: 71.43%
+bug: B in call_12, pair: (A, B), support: 10, confidence: 71.43%
+bug: B in call_13, pair: (A, B), support: 10, confidence: 71.43%
+bug: B in call_14, pair: (A, B), support: 10, confidence: 71.43%
+bug: C in call_15, pair: (B, C), support: 14, confidence: 87.50%
+bug: C in call_16, pair: (B, C), support: 14, confidence: 87.50%
+bug: D in call_16, pair: (B, D), support: 7, confidence: 87.50%
+bug: E in call_15, pair: (B, E), support: 4, confidence: 80.00%
