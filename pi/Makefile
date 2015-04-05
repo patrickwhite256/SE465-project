@@ -1,4 +1,5 @@
-CXXFLAGS=-Wall -g -std=c++11
+CXX=/usr/bin/g++44
+CXXFLAGS=-Wall -g -std=c++0x
 LINK=-lboost_regex
 
 OBJECTS=pipair.o parse.o function.o

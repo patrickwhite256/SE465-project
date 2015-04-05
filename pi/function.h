@@ -2,19 +2,27 @@
 #define FUNCTION_H_
 
 #include <unordered_map>
+#include <string>
+#include <boost/format.hpp>
+#include <iostream>
 
 class Function {
     static std::unordered_map<std::string, Function> functions;
     std::unordered_map<std::string, int> support;
-    std::string name;
+		std::unordered_map<std::string, int> calls;
+		std::string name;
     //TODO: calls
     public:
     Function() {}
     Function(std::string);
-    void addSupport(std::string);
+		std::string getName();
+		void findBugs();
+		void addSupport(std::string);
     void addCalls(std::string);
+		int getSupport();
     int getSupport(std::string);
-    //TODO: get calls
+		std::unordered_map<std::string, int> getSupportMap();
+    int getCalls(std::string);
     static Function *getFunction(std::string);
 };
 
