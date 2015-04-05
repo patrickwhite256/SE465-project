@@ -3,8 +3,6 @@
 
 #include <unordered_map>
 #include <string>
-#include <boost/format.hpp>
-#include <iostream>
 
 class Function {
     static std::unordered_map<std::string, Function> functions;
@@ -19,9 +17,9 @@ class Function {
 		void findBugs();
 		void addSupport(std::string);
     void addCalls(std::string);
-		int getSupport();
     int getSupport(std::string);
-		std::unordered_map<std::string, int> getSupportMap();
+		std::unordered_map<std::string, Function> *getFunctions();
+		std::unordered_map<std::string, int> *getSupportMap();
     int getCalls(std::string);
     static Function *getFunction(std::string);
 };
