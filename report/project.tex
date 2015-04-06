@@ -15,17 +15,18 @@
     text width=5em, text centered, rounded corners, minimum height=2em]
 
 \title{SE465-001 Project}
-\author{Sameer Ahmad (20458331) \and Patrick White (11111111) \and Andrew Yiu (11111111)}
+\author{Sameer Ahmad (20458331) \and Patrick White (11111111) \and Andrew Yiu (20466096)}
 \date{April 6, 2015}
 
 \begin{document}
 
 \maketitle
 
-\section*{Question 1 b}
+\section{Part I - B}
 Bug 1 (6 line locations):
 \begin{lstlisting}
-bug: apr_array_make in ap_init_virtual_host, pair: (apr_array_make, apr_array_push), support: 40, confidence: 86.96%
+bug: apr_array_make in ap_init_virtual_host, pair: (apr_array_make, apr_array_push),
+support: 40, confidence: 86.96%
 \end{lstlisting}
 Code for ap\_init\_virtual\_host:
 \begin{lstlisting}
@@ -72,7 +73,8 @@ AP_CORE_DECLARE(const char *) ap_init_virtual_host(apr_pool_t *p,
 This bug indicates a false positive. The bug reported by the static analysis tool states that calling apr\_array\_make without apr\_array\_push is considered a bug, given that in 86.96\% of uses of apr\_array\_make, the function will use apr\_array\_push as well. The reason that in this case the function does not call apr\_array\_push is because the array that is made is constructed with arguments that do not need pushed values. It is constructed on some values passed in and therefore needs no pushing to.\\\\
 Bug 2 (4 line locations):
 \begin{lstlisting}
-bug: qsort in ap_core_reorder_directories, pair: (qsort, strcmp), support: 4, confidence: 66.67%
+bug: qsort in ap_core_reorder_directories, pair: (qsort, strcmp), support: 4,
+confidence: 66.67%
 \end{lstlisting}
 Code for ap\_core\_reorder\_directories
 \begin{lstlisting}
@@ -120,5 +122,36 @@ void ap_core_reorder_directories(apr_pool_t *p, server_rec *s)
 \end{lstlisting}
 
 This bug line does represents a false positive. The function qsort is used to sort a set of object, while strcmp is used to compare strings - this means that if the objects that are to be sorted do not rely on strings for ordering, then there would be no reason to use the strcmp function, which is the case here - this function is sorting elts which are not or do not rely on string comparrisons.
+
+% Coverity on Apache
+\section{Part II - A}
+\subsection{CID 10022}
+\textbf{Intentional} - All other instances that lead to the warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the KeySetView instance instead of a decorated set. This code is fine as is.
+\subsection{CID 10023}
+\textbf{Intentional} - In the map that is being referenced is form a parent class. The other classes which make the call to super also does the same thing in the parent. In general, it is just poor practice and a suggested fix should be use a call to super like all the other similar calls.
+\subsection{CID 10024}
+\textbf{Intentional} - In the map that is being referenced is form a parent class. The other classes which make the call to super also does the same thing in the parent. In general, it is just poor practice and a suggested fix should be use a call to super like all the other similar calls.
+\subsection{CID 10025}
+TODO
+\subsection{CID 10026}
+\textbf{Bug} - Accessing a non-volatile member variable in a thread-safe implementation. This will cause inconsistencies with what is read in as 'last' on line 852. A suggested fix is to put that line in a 'synchronized' block.
+\subsection{CID 10027}
+\textbf{False Positive} - If deletedNode is null, then the bug would happen earlier. Since we only get to the flagged statement if deletedNode.getRight(index) != null, then inside the nextGreater call, the returned value will not be null.
+\subsection{CID 10028}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable 'last' is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of 'last' recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to 'last' form multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a 'synchronized' block.
+\subsection{CID 10036}
+\textbf{Bug} - This code block is entered under the assumptiong that lastReturned is not null. When two threads check for null at the same time and pass, one thread will lock before the other, set the value of lastReturned to null, unlock and let the other thread in. Then the other thread will hit line 767 and dereference null. A suggested fix is to put the null check inside the lock to ensure we do not dereference null.
+\subsection{CID 10037}
+\textbf{Intentional} - The function can be modified to perform a null check on the left subtree before dereferencing it. The developer assumes that the rotateRight function is called when a left subtree exists. This leaves the user to perform these checks before calling, or to handle nullPointerExceptions.
+\subsection{CID 10038}
+\textbf{Bug} - Most other examples will just call synchronize(lock). If this instance gets the lock on 'lock' after synchronize(list), then there is a large chance to deadlock when others hold the lock on 'lock'. Lines 1135. The suggested fix is to lock on 'lock' first.
+\subsection{CID 10039}
+\textbf{False Positive} - If deletedNode is null, then the bug would happen earlier. Since we only get to the flagged statement if deletedNode.getRight(index) != null, then inside the nextGreater call, the returned value will not be null.
+\subsection{CID 10040}
+\textbf{False Positive} - By inspecting other similar code snippets, the order of the locks occur with 'synchronized(map)' followed by 'synchronized(lock)'. Then no locking order is violated and no deadlock will occur.
+\subsection{CID 10041}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, modCount does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. It is fine as is, but it would also work if the developer changed the type of modCount to not be volatile.
+\subsection{CID 10042}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, modCount does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. It is fine as is, but it would also work if the developer changed the type of modCount to not be volatile.
 
 \end{document}
