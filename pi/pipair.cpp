@@ -44,6 +44,8 @@ int main(int argc, char **argv){
                         current_function->addCalls(ld->getFunctionName());
                     }
                     break;
+                case EXTERNAL_CALL:
+                    break;
                 case NODE_NULL:
                     current_function = NULL;
                     break;

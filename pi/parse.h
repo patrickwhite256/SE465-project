@@ -3,7 +3,7 @@
 #ifndef PARSE_H_
 #define PARSE_H_
 
-enum LineType {NODE_NULL, NODE, CALL};
+enum LineType {NODE_NULL, EXTERNAL_CALL, NODE, CALL};
 
 class LineData {
     LineType type;
