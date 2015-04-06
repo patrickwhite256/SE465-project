@@ -24,7 +24,7 @@ int main(int argc, char **argv){
     float t_confidence = 0.65;
     if(argc == 3) {
         t_support = atoi(argv[1]);
-        t_confidence = atoi(argv[2]) / 100;
+        t_confidence = (float)atoi(argv[2]) / 100;
     }
     string line;
     Function *current_function;
