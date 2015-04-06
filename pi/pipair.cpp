@@ -50,6 +50,7 @@ int main(int argc, char **argv){
                     current_function = NULL;
                     break;
             }
+            delete ld;
         }
     }
     create_support(&function_set);
