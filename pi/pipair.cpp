@@ -1,8 +1,57 @@
 #include <iostream>
+#include <unordered_set>
+#include <string>
+
+#include "parse.h"
+#include "function.h"
+
 using namespace std;
 
-int main(int argc, char **argv){
-    for(int i = 0; i < argc; i++){
-        cout << "Argument " << i << ": " << argv[i] << endl;
+void create_support(unordered_set<string> *function_set){
+    for(auto it = function_set->begin(); it != function_set->end(); ++it){
+        Function *outer_fn = Function::getFunction(*it);
+        for(auto inner_it = it; inner_it != function_set->end(); ++inner_it){
+            Function *inner_fn = Function::getFunction(*inner_it);
+            outer_fn->addSupport(*inner_it);
+            if(inner_it != it) inner_fn->addSupport(*it);
+        }
     }
+    function_set->clear();
+}
+
+int main(int argc, char **argv){
+    int t_support = 3;
+    float t_confidence = 0.65;
+    if(argc == 3) {
+        t_support = atoi(argv[1]);
+        t_confidence = (float)atoi(argv[2]) / 100;
+    }
+    string line;
+    Function *current_function;
+    unordered_set<string> function_set;
+    while(!cin.eof()){
+        getline(cin, line);
+        if(line.length() > 0){
+            LineData *ld = new LineData(line);
+            switch(ld->getLineType()) {
+                case NODE:
+                    create_support(&function_set);
+                    current_function = Function::getFunction(ld->getFunctionName());
+                    break;
+                case CALL:
+                    if(current_function != NULL){
+                        function_set.insert(ld->getFunctionName());
+                        current_function->addCalls(ld->getFunctionName());
+                    }
+                    break;
+                case EXTERNAL_CALL:
+                    break;
+                case NODE_NULL:
+                    current_function = NULL;
+                    break;
+            }
+        }
+    }
+    create_support(&function_set);
+    Function::findBugs(t_support, t_confidence);
 }
