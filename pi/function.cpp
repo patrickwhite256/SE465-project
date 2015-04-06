@@ -43,7 +43,9 @@ void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
         func = &(it->second);
         funcName = it->first;
         int selfSupport = func->getSupport(funcName);
-        for(auto inner_it = func->support.begin(); inner_it != func->support.end(); ++inner_it){
+        for(auto inner_it = func->support.begin();
+                inner_it != func->support.end();
+                ++inner_it){
             inner_funcName = inner_it->first;
             if(funcName == inner_funcName) continue;
             int pairSupport = inner_it->second;

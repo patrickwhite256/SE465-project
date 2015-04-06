@@ -31,7 +31,6 @@ void create_support(unordered_set<string> *function_set){
         functions.insert(Function::getFunction(*it));
     }
     create_support(&functions);
-    function_set->clear();
 }
 
 int main(int argc, char **argv){
@@ -56,6 +55,7 @@ int main(int argc, char **argv){
                 case NODE:
                     if(!expand_nodes){
                         create_support(&function_set);
+                        function_set.clear();
                     }
                     current_function = Function::getFunction(ld->getFunctionName());
                     break;
@@ -71,6 +71,7 @@ int main(int argc, char **argv){
                     current_function = NULL;
                     break;
             }
+            delete ld;
         }
     }
     if(!expand_nodes){
