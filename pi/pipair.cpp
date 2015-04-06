@@ -7,24 +7,43 @@
 
 using namespace std;
 
-void create_support(unordered_set<string> *function_set){
-    for(auto it = function_set->begin(); it != function_set->end(); ++it){
-        Function *outer_fn = Function::getFunction(*it);
-        for(auto inner_it = it; inner_it != function_set->end(); ++inner_it){
-            Function *inner_fn = Function::getFunction(*inner_it);
-            outer_fn->addSupport(*inner_it);
-            if(inner_it != it) inner_fn->addSupport(*it);
+void create_support(unordered_set<Function *> *function_set){
+    //for each function, create a bidirectional support link
+    //to all subsequent functions
+    for(auto fn = function_set->begin();
+            fn != function_set->end();
+            ++fn){
+        for(auto inner_fn = fn;
+                inner_fn != function_set->end();
+                ++inner_fn){
+            (*fn)->addSupport((*inner_fn)->getName());
+            if(inner_fn != fn) (*inner_fn)->addSupport((*fn)->getName());
         }
     }
+}
+
+void create_support(unordered_set<string> *function_set){
+    //convert to Functions *s and forward
+    unordered_set<Function *> functions;
+    for(auto it = function_set->begin();
+            it != function_set->end();
+            ++it){
+        functions.insert(Function::getFunction(*it));
+    }
+    create_support(&functions);
     function_set->clear();
 }
 
 int main(int argc, char **argv){
     int t_support = 3;
     float t_confidence = 0.65;
-    if(argc == 3) {
+    bool expand_nodes = false;
+    if(argc >= 3) {
         t_support = atoi(argv[1]);
         t_confidence = (float)atoi(argv[2]) / 100;
+    }
+    if (argc == 4) {
+        expand_nodes = true;
     }
     string line;
     Function *current_function;
@@ -35,7 +54,9 @@ int main(int argc, char **argv){
             LineData *ld = new LineData(line);
             switch(ld->getLineType()) {
                 case NODE:
-                    create_support(&function_set);
+                    if(!expand_nodes){
+                        create_support(&function_set);
+                    }
                     current_function = Function::getFunction(ld->getFunctionName());
                     break;
                 case CALL:
@@ -52,6 +73,15 @@ int main(int argc, char **argv){
             }
         }
     }
-    create_support(&function_set);
-    Function::findBugs(t_support, t_confidence);
+    if(!expand_nodes){
+        create_support(&function_set);
+    } else {
+        for(auto it = Function::getFunctions()->begin();
+                it != Function::getFunctions()->end();
+                ++it){
+            it->second.createExpandedCalls();
+            create_support(it->second.getExpandedCalls());
+        }
+    }
+    Function::findBugs(t_support, t_confidence, expand_nodes);
 }
