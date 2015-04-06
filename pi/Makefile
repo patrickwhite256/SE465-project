@@ -2,7 +2,7 @@ CXX=/usr/bin/g++44
 CXXFLAGS=-Wall -g -std=c++0x
 LINK=-lboost_regex
 
-OBJECTS=pipair.o parse.o function.o
+OBJECTS=pipair.o parse.o function.o friendship.o
 
 .PHONY: all clean
 all: pipair-core

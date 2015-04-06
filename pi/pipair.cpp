@@ -31,13 +31,11 @@ int main(int argc, char **argv){
                 case NODE:
                     create_support(&function_set);
                     current_function = Function::getFunction(ld->getFunctionName());
-                    cout << "Function " << ld->getFunctionName() << endl;
                     break;
                 case CALL:
                     if(current_function != NULL){
                         function_set.insert(ld->getFunctionName());
                         current_function->addCalls(ld->getFunctionName());
-                        cout << " calls " << ld->getFunctionName() << endl;
                     }
                     break;
                 case NODE_NULL:
@@ -47,5 +45,5 @@ int main(int argc, char **argv){
         }
     }
     create_support(&function_set);
-    current_function->findBugs();
+    Function::findBugs(3, 0.65);
 }
