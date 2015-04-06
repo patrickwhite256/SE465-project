@@ -78,7 +78,7 @@ void Function::findBugs(int t_support, float t_confidence){
 
                     cout << boost::format("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%")
                         % inner_func->getName() % func->getName() % firstName % secondName
-                        % friend_it->support % friend_it->confidence << endl;
+                        % friend_it->support % (friend_it->confidence * 100) << endl;
                 }
             }
         }

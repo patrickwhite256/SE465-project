@@ -20,11 +20,11 @@ void create_support(unordered_set<string> *function_set){
 }
 
 int main(int argc, char **argv){
-    int T_SUPPORT = 3;
-    float T_CONFIDENCE = 0.65;
+    int t_support = 3;
+    float t_confidence = 0.65;
     if(argc == 3) {
-        T_SUPPORT = atoi(argv[1]);
-        T_CONFIDENCE = atoi(argv[2]) / 100;
+        t_support = atoi(argv[1]);
+        t_confidence = atoi(argv[2]) / 100;
     }
     string line;
     Function *current_function;
@@ -51,5 +51,5 @@ int main(int argc, char **argv){
         }
     }
     create_support(&function_set);
-    Function::findBugs(3, 0.65);
+    Function::findBugs(t_support, t_confidence);
 }
