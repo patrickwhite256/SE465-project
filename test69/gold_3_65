@@ -1,0 +1,4 @@
+bug: b1 in c8, pair: (b1, b2), support: 7, confidence: 77.78%
+bug: b1 in r1, pair: (b1, b2), support: 7, confidence: 77.78%
+bug: b2 in b2_wrapper, pair: (b1, b2), support: 7, confidence: 77.78%
+bug: b2 in r2, pair: (b1, b2), support: 7, confidence: 77.78%
