@@ -42,43 +42,42 @@ unordered_map<std::string, Function> *Function::getFunctions(){
 
 void Function::findBugs(int t_support, float t_confidence){
     Function *func, *inner_func;
+    string funcName, inner_funcName;
     for(auto it = functions.begin(); it != functions.end(); ++it ){
         func = &(it->second);
-        for(auto inner_it = it; inner_it != functions.end(); ++inner_it){
-            if(it == inner_it) continue;
-            inner_func = &(inner_it->second);
-            int supportPair = inner_func->getSupport(func->getName());
-            if(supportPair < t_support) continue;
+        funcName = it->first;
+        int selfSupport = func->getSupport(funcName);
+        for(auto inner_it = func->support.begin(); inner_it != func->support.end(); ++inner_it){
+            inner_funcName = inner_it->first;
+            if(funcName == inner_funcName) continue;
+            int pairSupport = inner_it->second;
+            if(pairSupport < t_support) continue;
 
-            float confidence = supportPair / (float)(func->getSupport(func->getName()));
+            float confidence = (float)pairSupport / selfSupport;
             if(confidence >= t_confidence) {
-                func->friendships.push_back(Friendship(inner_func->getName(), supportPair, confidence));
-            }
-
-            confidence = supportPair / (float)(inner_func->getSupport(inner_func->getName()));
-            if(confidence >= t_confidence) {
-                inner_func->friendships.push_back(Friendship(func->getName(), supportPair, confidence));
+                func->friendships.push_back(Friendship(inner_funcName, pairSupport, confidence));
             }
         }
     }
+
     for(auto it = functions.begin(); it != functions.end(); ++it){
         func = &(it->second);
         for(auto inner_it = func->calls.begin(); inner_it != func->calls.end(); ++inner_it){
-            Function *iFunc = getFunction(*inner_it);
+            inner_func = getFunction(*inner_it);
             //for each called function, check if its friends are called
-            for(auto friend_it = iFunc->friendships.begin(); friend_it != iFunc->friendships.end(); ++friend_it){
+            for(auto friend_it = inner_func->friendships.begin(); friend_it != inner_func->friendships.end(); ++friend_it){
                 string friendName = friend_it->friendName;
                 if(!func->doesCall(friendName)){
                     string firstName = *inner_it;
                     string secondName = friendName;
 
-                    if(iFunc->getName() > friendName){
+                    if(*inner_it > friendName){
                         firstName = friendName;
                         secondName = *inner_it;
                     }
 
                     cout << boost::format("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%")
-                        % iFunc->getName() % func->getName() % firstName % secondName
+                        % inner_func->getName() % func->getName() % firstName % secondName
                         % friend_it->support % friend_it->confidence << endl;
                 }
             }
