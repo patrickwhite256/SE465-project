@@ -48,6 +48,7 @@ int main(int argc, char **argv){
     Function *current_function;
     unordered_set<string> function_set;
     while(!cin.eof()){
+        //parse input - classify each line as a Node or call
         getline(cin, line);
         if(line.length() > 0){
             LineData *ld = new LineData(line);
@@ -73,6 +74,8 @@ int main(int argc, char **argv){
         }
     }
     create_support(&function_set);
+    //expand all the functions to an appropriate level
+    //replacing all calls of function calls with the functions they call
     if(expand_level >= 0) {
         for(auto it = Function::getFunctions()->begin();
                 it != Function::getFunctions()->end();
@@ -80,5 +83,6 @@ int main(int argc, char **argv){
             it->second.createExpandedCalls(expand_level);
         }
     }
+    //run findBugs on all functions with support, confidence and expand level
     Function::findBugs(t_support, t_confidence, expand_level >= 0);
 }

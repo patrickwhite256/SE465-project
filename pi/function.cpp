@@ -5,7 +5,7 @@
 #include <iostream>
 
 using namespace std;
-
+//the functions is a map of functions <name, Function>
 unordered_map<string, Function> Function::functions;
 
 Function::Function(string name){
@@ -39,6 +39,9 @@ unordered_map<std::string, Function> *Function::getFunctions(){
 void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
     Function *func, *inner_func;
     string funcName, inner_funcName;
+    //create all friendships for each functions
+    //a friendship is a function pair where the support(function1, function2)/ support(function1) >= t_confidence
+    //and where support(function1, function2) >= t_support
     for(auto it = functions.begin(); it != functions.end(); ++it ){
         func = &(it->second);
         funcName = it->first;
@@ -57,7 +60,8 @@ void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
             }
         }
     }
-
+    //Iterates over the set of functions, for any friendships that exist
+    //that are not called together in a function, output an error for that friendship
     for(auto it = functions.begin(); it != functions.end(); ++it){
         func = &(it->second);
         for(auto inner_it = func->calls.begin();
@@ -89,6 +93,9 @@ void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
     }
 }
 
+//This function will get and return a function if it exists
+//if it does not exist, then create a function with the
+//function name and return the new function
 Function *Function::getFunction(string functionName){
     bool exists = functions.count(functionName) == 1;
     if(!exists){
