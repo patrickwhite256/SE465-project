@@ -8,36 +8,30 @@
 <event>
 <tag>var_decl</tag>
 <description>{CovLStrv2{{t{Declaring variable {0} without initializer.}{{code{current_function}}}}}}</description>
-<line>48</line>
+<line>30</line>
 </event>
 <event>
 <tag>cond_true</tag>
-<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{argc &gt;= 3}}}}}}</description>
-<line>40</line>
-<path_event></path_event>
-</event>
-<event>
-<tag>cond_true</tag>
-<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{argc == 4}}}}}}</description>
-<line>44</line>
+<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{argc == 3}}}}}}</description>
+<line>25</line>
 <path_event></path_event>
 </event>
 <event>
 <tag>cond_true</tag>
 <description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{!std::cin.eof()}}}}}}</description>
-<line>50</line>
+<line>32</line>
 <path_event></path_event>
 </event>
 <event>
 <tag>cond_true</tag>
 <description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{line.length() &gt; 0}}}}}}</description>
-<line>52</line>
+<line>34</line>
 <path_event></path_event>
 </event>
 <event>
 <tag>switch</tag>
 <description>{CovLStrv2{{t{Switch case value {0}}{{code{CALL}}}}}}</description>
-<line>54</line>
+<line>36</line>
 <path_event>
 <jump>true</jump>
 </path_event>
@@ -45,7 +39,7 @@
 <event>
 <tag>switch_case</tag>
 <description>{CovLStrv2{{t{Reached case {0}}{{code{CALL}}}}}}</description>
-<line>60</line>
+<line>41</line>
 <path_event>
 <suppressible>true</suppressible>
 </path_event>
@@ -54,7 +48,7 @@
 <main>true</main>
 <tag>uninit_use</tag>
 <description>{CovLStrv2{{t{Using uninitialized value {0}.}{{code{current_function}}}}}}</description>
-<line>61</line>
+<line>42</line>
 </event>
 <extra>current_function</extra>
 <subcategory>pointer_deref_read</subcategory>

@@ -1,11 +1,11 @@
 {
   "cov-analyze" : {
-    time : 17,
+    time : 25,
     "line-counts" : {
       "C/C++" : {
-        "blank-lines" : 16808,
-        "code-lines" : 76452,
-        "comment-lines" : 27033
+        "blank-lines" : 16806,
+        "code-lines" : 76386,
+        "comment-lines" : 27027
       },
       Java : {
         "blank-lines" : 0,
@@ -23,8 +23,8 @@
     "short-platform" : "linux64",
     extver : "7.6.0",
     intver : "9b77a50df0 p-harmony-push-21098.563",
-    "aw-peak-mem-bytes" : 65499136,
-    "am+aw-peak-mem-bytes" : 67956736,
+    "aw-peak-mem-bytes" : 62312448,
+    "am+aw-peak-mem-bytes" : 64569344,
     "bytecode-functions" : 0,
     concurrency : true,
     cxx : true,
@@ -32,16 +32,16 @@
     failures : 0,
     "files-analyzed" : 91,
     force : false,
-    "function-metrics-count" : 936,
-    "functions-analyzed" : 936,
+    "function-metrics-count" : 846,
+    "functions-analyzed" : 846,
     "incremental-hits" : 0,
-    "incremental-misses" : 3744,
+    "incremental-misses" : 3384,
     "max-mem" : 512,
     "memout-count" : 0,
     "pathout-count" : 0,
     paths : 5000,
-    "paths-analyzed" : 6163,
-    "peak-mem-bytes" : 72187904,
+    "paths-analyzed" : 5708,
+    "peak-mem-bytes" : 72044544,
     security : true,
     "tus-count" : 4,
     "string-graph-nodes" : 0,

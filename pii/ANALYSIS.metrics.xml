@@ -5,7 +5,7 @@
 <metrics>
     <metric>
         <name>time</name>
-        <value>17</value>
+        <value>25</value>
     </metric>
     <metric>
         <name>args</name>
@@ -13,7 +13,7 @@
     </metric>
     <metric>
         <name>host</name>
-        <value>ecelinux5.uwaterloo.ca</value>
+        <value>eceLinux1.uwaterloo.ca</value>
     </metric>
     <metric>
         <name>short-platform</name>
@@ -53,15 +53,15 @@
     </metric>
     <metric>
         <name>peak-mem-bytes</name>
-        <value>72187904</value>
+        <value>72044544</value>
     </metric>
     <metric>
         <name>aw-peak-mem-bytes</name>
-        <value>65499136</value>
+        <value>62312448</value>
     </metric>
     <metric>
         <name>am+aw-peak-mem-bytes</name>
-        <value>67956736</value>
+        <value>64569344</value>
     </metric>
     <metric>
         <name>files-analyzed</name>
@@ -69,51 +69,51 @@
     </metric>
     <metric>
         <name>cpp-code-lines</name>
-        <value>76452</value>
+        <value>76386</value>
     </metric>
     <metric>
         <name>cpp-comment-lines</name>
-        <value>27033</value>
+        <value>27027</value>
     </metric>
     <metric>
         <name>cpp-blank-lines</name>
-        <value>16808</value>
+        <value>16806</value>
     </metric>
     <metric>
         <name>cpp-code-lines-with-inline-comments</name>
-        <value>2140</value>
+        <value>2139</value>
     </metric>
     <metric>
         <name>code-lines</name>
-        <value>76452</value>
+        <value>76386</value>
     </metric>
     <metric>
         <name>comment-lines</name>
-        <value>27033</value>
+        <value>27027</value>
     </metric>
     <metric>
         <name>blank-lines</name>
-        <value>16808</value>
+        <value>16806</value>
     </metric>
     <metric>
         <name>code-lines-with-inline-comments</name>
-        <value>2140</value>
+        <value>2139</value>
     </metric>
     <metric>
         <name>functions-analyzed</name>
-        <value>936</value>
+        <value>846</value>
     </metric>
     <metric>
         <name>function-metrics-count</name>
-        <value>936</value>
+        <value>846</value>
     </metric>
     <metric>
         <name>classes-analyzed</name>
-        <value>277</value>
+        <value>249</value>
     </metric>
     <metric>
         <name>paths-analyzed</name>
-        <value>6163</value>
+        <value>5708</value>
     </metric>
     <metric>
         <name>memout-count</name>
@@ -133,7 +133,7 @@
     </metric>
     <metric>
         <name>incremental-misses</name>
-        <value>3744</value>
+        <value>3384</value>
     </metric>
     <metric>
         <name>incremental-hits</name>
@@ -173,7 +173,7 @@
     </metric>
     <metric>
         <name>code-version-date</name>
-        <value>1428370707</value>
+        <value>1428373238</value>
     </metric>
     <metric>
         <name>cxx</name>

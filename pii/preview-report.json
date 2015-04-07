@@ -4,7 +4,7 @@
     "version" : 2
   },
   "analysisInfo" : {
-    "reportTimestamp" : "2015-04-07T01:46:06.803Z",
+    "reportTimestamp" : "2015-04-07T02:22:06.332Z",
     "comparisonSnapshotId" : null,
     "ownerAssignmentRule" : "default_component_owner",
     "command" : "/usr/local/cov-analysis-7.6.0/bin/cov-analyze --dir /home/ps2white/coverity-idirs/g68-pipair -c /home/ps2white/coverity_config.xml --include-java -j auto --disable-webapp-security --strip-path /home/ps2white/qaproj/SE465-project/pi --all --enable-fb",
@@ -30,7 +30,7 @@
     } ],
     "triage" : {
       "externalReference" : null,
-      "classification" : "Unclassified",
+      "classification" : "Pending",
       "owner" : null,
       "action" : "Undecided",
       "severity" : "Unspecified",
@@ -59,7 +59,7 @@
     } ],
     "triage" : {
       "externalReference" : null,
-      "classification" : "Unclassified",
+      "classification" : "Pending",
       "owner" : null,
       "action" : "Undecided",
       "severity" : "Unspecified",
@@ -80,7 +80,7 @@
       "extra" : "too_few_args",
       "mergeWithLowercaseFile" : false,
       "subcategory" : "none",
-      "mainEventLineNumber" : 36,
+      "mainEventLineNumber" : 22,
       "mainEventDescription" : "In function \"main(int, char **)\" an exception of type \"boost::io::too_few_args const\" is thrown and never caught.",
       "componentName" : "Other",
       "componentDefaultOwner" : null,
@@ -88,7 +88,7 @@
     } ],
     "triage" : {
       "externalReference" : null,
-      "classification" : "Unclassified",
+      "classification" : "Bug",
       "owner" : null,
       "action" : "Undecided",
       "severity" : "Unspecified",
@@ -109,7 +109,7 @@
       "extra" : "too_many_args",
       "mergeWithLowercaseFile" : false,
       "subcategory" : "none",
-      "mainEventLineNumber" : 36,
+      "mainEventLineNumber" : 22,
       "mainEventDescription" : "In function \"main(int, char **)\" an exception of type \"boost::io::too_many_args const\" is thrown and never caught.",
       "componentName" : "Other",
       "componentDefaultOwner" : null,
@@ -117,7 +117,7 @@
     } ],
     "triage" : {
       "externalReference" : null,
-      "classification" : "Unclassified",
+      "classification" : "Bug",
       "owner" : null,
       "action" : "Undecided",
       "severity" : "Unspecified",
@@ -138,7 +138,7 @@
       "extra" : "current_function",
       "mergeWithLowercaseFile" : false,
       "subcategory" : "pointer_deref_read",
-      "mainEventLineNumber" : 61,
+      "mainEventLineNumber" : 42,
       "mainEventDescription" : "Using uninitialized value \"current_function\".",
       "componentName" : "Other",
       "componentDefaultOwner" : null,
@@ -146,7 +146,7 @@
     } ],
     "triage" : {
       "externalReference" : null,
-      "classification" : "Unclassified",
+      "classification" : "Intentional",
       "owner" : null,
       "action" : "Undecided",
       "severity" : "Unspecified",

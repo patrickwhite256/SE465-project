@@ -9,18 +9,18 @@
 <main>true</main>
 <tag>root_function</tag>
 <description>{CovLStrv2{{t{In function {0} an exception of type {1} is thrown and never caught.}{{code{main(int, char **)}}}{{code{boost::io::too_few_args const}}}}}}</description>
-<line>36</line>
+<line>22</line>
 </event>
 <event>
 <tag>fun_call_w_exception</tag>
 <description>{CovLStrv2{{t{Called function throws an exception of type {0}.}{{code{boost::io::too_few_args const}}}}}}</description>
-<line>83</line>
+<line>57</line>
 <model_ptr>
 <module>module</module>
 <property>prop</property>
 <file>/home/ps2white/qaproj/SE465-project/pi/function.cpp</file>
-<function>_ZN8Function8findBugsEifb</function>
-<key>b79ae41c1f816a7cdeba7f0769180b5d</key>
+<function>_ZN8Function8findBugsEif</function>
+<key>5d422290b84f661582048c1ed966527b</key>
 <id>1</id>
 </model_ptr>
 </event>
@@ -47,18 +47,18 @@
 <main>true</main>
 <tag>root_function</tag>
 <description>{CovLStrv2{{t{In function {0} an exception of type {1} is thrown and never caught.}{{code{main(int, char **)}}}{{code{boost::io::too_many_args const}}}}}}</description>
-<line>36</line>
+<line>22</line>
 </event>
 <event>
 <tag>fun_call_w_exception</tag>
 <description>{CovLStrv2{{t{Called function throws an exception of type {0}.}{{code{boost::io::too_many_args const}}}}}}</description>
-<line>83</line>
+<line>57</line>
 <model_ptr>
 <module>module</module>
 <property>prop</property>
 <file>/home/ps2white/qaproj/SE465-project/pi/function.cpp</file>
-<function>_ZN8Function8findBugsEifb</function>
-<key>b79ae41c1f816a7cdeba7f0769180b5d</key>
+<function>_ZN8Function8findBugsEif</function>
+<key>5d422290b84f661582048c1ed966527b</key>
 <id>2</id>
 </model_ptr>
 </event>
