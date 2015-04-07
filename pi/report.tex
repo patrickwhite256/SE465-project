@@ -1,0 +1,61 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\author{Patrick White}
+\begin{document}
+\subsection{Usage}
+To use the inter-procedural analysis feature, add the expansion depth as a fourth command line parameter to the program: \texttt{./pipair 3 65} will not expand nodes. \texttt{./pipair 3 65 1} will expand nodes one level deep. \texttt{./pipair 3 65 0} will expand to an infinite depth.
+\subsection{Solution Description}
+When using inter-procedural analysis, the program will expand nodes up to the depth provided, so that each node keeps track of functions that are actually called by the node, and also a set of functions that are called by nodes up to the depth provided. This does not affect the support values of the functions. Consider the following example with $depth=1$:
+\begin{verbatim}
+void A(){}
+void B(){}
+void C(){
+	B();
+}
+void D(){
+	A();
+	C();
+}
+\end{verbatim}
+In this example, $support(\{A,B\})$ is still $0$ because $A$ and $B$ are never called together in the same function, even though $D$ becomes expanded so that its expanded call set is $\{A,B,C\}$. If they did affect each other's $support$ levels, the appearance of $B$ in $C$ would be considered to be a bug, since the support of $A$ and $B$ would be $1$, but $B$ appears without $A$ in $C$.
+
+\noindent The use of this extended call set is that when a lone occurrence of a normally-paired function is a bug, it checks the extended call set for the presence of the other function instead of only the other functions called by the same node. Consider the example:
+\begin{verbatim}
+void A(){}
+void B(){}
+void C1(){
+	A();
+	B();
+}
+void C2(){
+	A();
+	B();
+}
+//... repeat a number of times
+//... enough for the program to determine A->B is an invariant
+void D(){
+	A();
+	C1();
+}
+\end{verbatim}
+In this example, $A$ and $B$ appear together enough for the program to determine that the presence of one without the other is a bug. With no inter-procedural analysis, the appearance of $A$ in $D$ is considered to be a bug because $D$ does not directly call $B$, even though $C1$ always calls $B$. With inter-procedural analysis to any depth greater than zero, the $C1$ node is expanded within $D$ so the expanded call set of $D$ is $\{A,B,C1\}$, and this is not reported as a bug.
+\subsection{Experiment}
+The analysis was run on the \texttt{httpd} source code with varying levels of depth with $T\_CONDFIDENCE=65\%$ and $T\_SUPPORT=3$. At each level, the number of bugs reported was recorded.
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Inter-procedural analysis depth} & \textbf{Reported Bugs}\\\hline
+No inter-procedural analysis & 205\\
+1 & 165\\
+2 & 159\\
+3 & 156\\
+$\infty$ & 156\\
+\end{tabular}
+\end{center}
+After three levels, no more inter-procedural analysis could reduce the number of bugs reported by the tool. While the inter-procedural analysis still leaves 156 reported bugs, many of which are undoubtedly false positives, it does reduce the overall number of bugs reported by almost 20\%. Since the difference between these is considering when functions at different call depths, it is unlikely that this creates any false negatives, since it is only eliminating cases where a bug is reported from the absence of a function call, but it is found at a deeper level. It's worth nothing that most of the bugs were eliminated with a single level of expansion. This means that the programmer was consciously calling a function that was known to be replaced by a call to a function that calls the expected function.
+\subsection{Validity of Solution}
+As described in the previous section, this solution is unlikely to create false negatives. Also, it cannot create additional bug reports (false positives) since it does not modify the support values of the original analysis. An example of this working can be found by running the analysis with no inter-procedural analysis and one level of inter-procedural analysis on the \texttt{httpd} source code. As discussed in (b), it is not incorrect for \texttt{apr\_array\_make} to be called without \texttt{apr\_array\_push}, or vice versa. The version with inter-procedural analysis eliminates several instances of this false positive pair.
+\end{document}

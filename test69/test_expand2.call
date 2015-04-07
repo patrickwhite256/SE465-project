@@ -1,0 +1,73 @@
+Call graph node <<null function>><<0x1808d70>>  #uses=0
+  CS<0x0> calls function 'b1'
+  CS<0x0> calls function 'b2'
+  CS<0x0> calls function 'b2_wrapper'
+  CS<0x0> calls function 'c1'
+  CS<0x0> calls function 'c2'
+  CS<0x0> calls function 'c3'
+  CS<0x0> calls function 'c4'
+  CS<0x0> calls function 'c5'
+  CS<0x0> calls function 'c6'
+  CS<0x0> calls function 'c7'
+  CS<0x0> calls function 'c8'
+  CS<0x0> calls function 'r1'
+  CS<0x0> calls function 'r2'
+  CS<0x0> calls function 'main'
+
+Call graph node for function: 'b2'<<0x1808de0>>  #uses=10
+
+Call graph node for function: 'b2_wrapper'<<0x18054f0>>  #uses=2
+  CS<0x1805b28> calls function 'b2'
+
+Call graph node for function: 'b1'<<0x1805710>>  #uses=10
+
+Call graph node for function: 'c1'<<0x180ca40>>  #uses=2
+  CS<0x1805c68> calls function 'b1'
+  CS<0x1805ce8> calls function 'b2'
+
+Call graph node for function: 'c2'<<0x180ca70>>  #uses=2
+  CS<0x1805e28> calls function 'b1'
+  CS<0x1805ea8> calls function 'b2'
+
+Call graph node for function: 'c7'<<0x180cae0>>  #uses=2
+  CS<0x1807b98> calls function 'b1'
+  CS<0x1807c18> calls function 'b2'
+
+Call graph node for function: 'c3'<<0x18027c0>>  #uses=2
+  CS<0x1805fe8> calls function 'b1'
+  CS<0x1806068> calls function 'b2'
+
+Call graph node for function: 'c4'<<0x180cc30>>  #uses=2
+  CS<0x18061a8> calls function 'b1'
+  CS<0x18076d8> calls function 'b2'
+
+Call graph node for function: 'c5'<<0x180ccf0>>  #uses=2
+  CS<0x1807818> calls function 'b1'
+  CS<0x1807898> calls function 'b2'
+
+Call graph node for function: 'c6'<<0x180cdb0>>  #uses=2
+  CS<0x18079d8> calls function 'b1'
+  CS<0x1807a58> calls function 'b2'
+
+Call graph node for function: 'c8'<<0x180cba0>>  #uses=2
+  CS<0x1807d58> calls function 'b1'
+  CS<0x1807dd8> calls function 'b2_wrapper'
+
+Call graph node for function: 'r1'<<0x180d110>>  #uses=2
+  CS<0x1807f18> calls function 'b1'
+  CS<0x1807f98> calls function 'r2'
+
+Call graph node for function: 'r2'<<0x180d240>>  #uses=2
+  CS<0x18080d8> calls function 'b2'
+  CS<0x1808158> calls function 'r1'
+
+Call graph node for function: 'main'<<0x180d1d0>>  #uses=1
+  CS<0x18090d8> calls function 'c1'
+  CS<0x1809158> calls function 'c2'
+  CS<0x18091d8> calls function 'c3'
+  CS<0x1809258> calls function 'c4'
+  CS<0x18092d8> calls function 'c5'
+  CS<0x1809358> calls function 'c6'
+  CS<0x18093d8> calls function 'c7'
+  CS<0x1809458> calls function 'c8'
+
