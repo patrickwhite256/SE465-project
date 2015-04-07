@@ -3,7 +3,6 @@
 *.bc
 pipair-core
 *.aux
-*.pdf
 *.log
 *.synctex.gz
 
