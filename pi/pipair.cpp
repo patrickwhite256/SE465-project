@@ -53,10 +53,8 @@ int main(int argc, char **argv){
             LineData *ld = new LineData(line);
             switch(ld->getLineType()) {
                 case NODE:
-                    if(expand_level < 0){
-                        create_support(&function_set);
-                        function_set.clear();
-                    }
+                    create_support(&function_set);
+                    function_set.clear();
                     current_function = Function::getFunction(ld->getFunctionName());
                     break;
                 case CALL:
@@ -74,14 +72,12 @@ int main(int argc, char **argv){
             delete ld;
         }
     }
-    if(expand_level < 0){
-        create_support(&function_set);
-    } else {
+    create_support(&function_set);
+    if(expand_level >= 0) {
         for(auto it = Function::getFunctions()->begin();
                 it != Function::getFunctions()->end();
                 ++it){
             it->second.createExpandedCalls(expand_level);
-            create_support(it->second.getExpandedCalls());
         }
     }
     Function::findBugs(t_support, t_confidence, expand_level >= 0);

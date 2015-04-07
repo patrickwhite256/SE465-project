@@ -1,0 +1,27 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\author{Patrick White}
+\begin{document}
+\subsection{Usage}
+To use the inter-procedural analysis feature, add the expansion depth as a fourth command line parameter to the program: \texttt{./pipair 3 65} will not expand nodes. \texttt{./pipair 3 65 1} will expand nodes one level deep. \texttt{./pipair 3 65 0} will expand to an infinite depth.
+\subsection{Solution Description}
+When using inter-procedural analysis, the program will expand nodes up to the depth provided, so that each node keeps track of functions that are actually called by the node, and also a set of functions that are called up to the depth provided. This does not affect the support values of the functions. Consider the following example with $depth=1$:
+\begin{verbatim}
+void A(){}
+void B(){}
+void C(){
+	B();
+}
+void D(){
+	A();
+	C();
+}
+\end{verbatim}
+In this example, $support(\{A,B\})$ is still $0$ because $A$ and $B$ are never called together in the same function, even though $D$ becomes expanded so that its expanded call set is $\{A,B,C\}$. If they did affect each other's $support$ levels, $C$ would be considered to be a bug, since $D$
+\subsection{Experiment}
+\subsection{Validity of Solution}
+\end{document}
