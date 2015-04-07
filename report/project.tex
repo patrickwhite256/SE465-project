@@ -1,0 +1,178 @@
+\documentclass[12pt]{article}
+
+\usepackage[letterpaper, hmargin=0.75in, vmargin=0.75in]{geometry}
+\usepackage{float}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{courier}
+\usepackage{tikz}
+
+\lstset{basicstyle=\footnotesize\ttfamily}
+
+\usetikzlibrary{arrows,automata,shapes}
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=2em]
+
+\title{SE465-001 Project}
+\author{Sameer Ahmad (20458331) \and Patrick White (20464876) \and Andrew Yiu (20466096)}
+\date{April 6, 2015}
+
+\begin{document}
+
+\maketitle
+
+\section{Part I - B}
+Bug 1 (16 line locations):
+\begin{lstlisting}
+bug: apr_array_make in ap_init_virtual_host, pair: (apr_array_make, apr_array_push),
+support: 40, confidence: 86.96%
+\end{lstlisting}
+Code for ap\_init\_virtual\_host:
+\begin{lstlisting}
+AP_CORE_DECLARE(const char *) ap_init_virtual_host(apr_pool_t *p,
+						const char *hostname,
+						server_rec *main_server,
+						server_rec **ps)
+{
+	server_rec *s = (server_rec *) apr_pcalloc(p, sizeof(server_rec));
+	
+	/* TODO: this crap belongs in http_core */
+	s->process = main_server->process;
+	s->server_admin = NULL;
+	s->server_hostname = NULL;
+	s->server_scheme = NULL;
+	s->error_fname = NULL;
+	s->timeout = 0;
+	s->keep_alive_timeout = 0;
+	s->keep_alive = -1;
+	s->keep_alive_max = -1;
+	s->error_log = main_server->error_log;
+	s->loglevel = main_server->loglevel;
+	/* useful default, otherwise we get a port of 0 on redirects */
+	s->port = main_server->port;
+	s->next = NULL;
+	
+	s->is_virtual = 1;
+	s->names = apr_array_make(p, 4, sizeof(char **));
+	s->wild_names = apr_array_make(p, 4, sizeof(char **));
+	
+	s->module_config = create_empty_config(p);
+	s->lookup_defaults = ap_create_per_dir_config(p);
+	
+	s->limit_req_line = main_server->limit_req_line;
+	s->limit_req_fieldsize = main_server->limit_req_fieldsize;
+	s->limit_req_fields = main_server->limit_req_fields;
+	
+	*ps = s;
+	
+	return ap_parse_vhost_addrs(p, hostname, s);
+}
+\end{lstlisting}
+
+This bug indicates a false positive. The bug reported by the static analysis tool states that calling apr\_array\_make without apr\_array\_push is considered a bug, given that in 86.96\% of uses of apr\_array\_make, the function will use apr\_array\_push as well. The reason that in this case the function does not call apr\_array\_push is because the array that is made is constructed with arguments that do not need pushed values. It is constructed on some values passed in and therefore needs no pushing to.\\\\
+Bug 2 (2 line locations):
+\begin{lstlisting}
+bug: qsort in ap_core_reorder_directories, pair: (qsort, strcmp), support: 4,
+confidence: 66.67%
+\end{lstlisting}
+Code for ap\_core\_reorder\_directories
+\begin{lstlisting}
+void ap_core_reorder_directories(apr_pool_t *p, server_rec *s)
+	{
+	core_server_config *sconf;
+	apr_array_header_t *sec_dir;
+	struct reorder_sort_rec *sortbin;
+	int nelts;
+	ap_conf_vector_t **elts;
+	int i;
+	apr_pool_t *tmp;
+	
+	sconf = ap_get_module_config(s->module_config, &core_module);
+	sec_dir = sconf->sec_dir;
+	nelts = sec_dir->nelts;
+	elts = (ap_conf_vector_t **)sec_dir->elts;
+	
+	if (!nelts) {
+	/* simple case of already being sorted... */
+	/* We're not checking this condition to be fast... we're checking
+	* it to avoid trying to palloc zero bytes, which can trigger some
+	* memory debuggers to barf
+	*/
+	return;
+	}
+	
+	/* we have to allocate tmp space to do a stable sort */
+	apr_pool_create(&tmp, p);
+	sortbin = apr_palloc(tmp, sec_dir->nelts * sizeof(*sortbin));
+	for (i = 0; i < nelts; ++i) {
+	sortbin[i].orig_index = i;
+	sortbin[i].elt = elts[i];
+	}
+	
+	qsort(sortbin, nelts, sizeof(*sortbin), reorder_sorter);
+	
+	/* and now copy back to the original array */
+	for (i = 0; i < nelts; ++i) {
+	elts[i] = sortbin[i].elt;
+	}
+	
+	apr_pool_destroy(tmp);
+	}
+\end{lstlisting}
+
+This bug line does represents a false positive. The function qsort is used to sort a set of object, while strcmp is used to compare strings - this means that if the objects that are to be sorted do not rely on strings for ordering, then there would be no reason to use the strcmp function, which is the case here - this function is sorting elts which are not or do not rely on string comparrisons.
+
+% Coverity on Apache Commons
+\section{Part II - A}
+\subsection{Coverity ID 10022}
+\textbf{False Positive} - All other instances that lead to this warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the \texttt{KeySetView} instance instead of a decorated set, which is a different scenario from the similar examples resulting in a non-issue.
+\subsection{Coverity ID 10023}
+\textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
+\subsection{Coverity ID 10024}
+\textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
+\subsection{Coverity ID 10025}
+\textbf{False Positive} - At the beginning of the flagged block, we have \texttt{currentIterator} equal null. After a few method calls, we see a point where \texttt{currentIterator} is dereferenced (line 186). Once we enter the first method, we have the \texttt{iterator} variable in \texttt{findNextByIterator} equal to not null. Then in the first if statement, \texttt{currentIterator} is set to \texttt{iterator}, which is a non-null value. Then when \texttt{currentIterator} is dereferenced, it is no longer null and we do not run into a \texttt{nullPointerException}.
+\subsection{Coverity ID 10026}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 852 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10027}
+\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier in the function block, which is not related to this function. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} function call, we take the branch for \texttt{deletedNode.getRight(index) != null} and end up returning a non-null node. Then the value passed into swapPosition is valid and causes no exceptions.
+\subsection{Coverity ID 10028}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10029}
+\textbf{Bug} - This is a bug with multi-threading because the first thread to reach the lock will modify the \texttt{lastReturned} value to null. When the next thread to reach the lock is able to enter the critical section, \texttt{lastReturned} will be null and line 664 will dereference \texttt{lastReturned}, causing a \texttt{nullPpinterException}. A proposed fix is to include the null check found on lines 656 to 658 inside the critical section.
+\subsection{Coverity ID 10030}
+\textbf{False Positive} - Because the lock on \texttt{lock} is guaranteed before entering the \texttt{isEmpty} function. This means that the calls within the isEmpty() function are guaranteed to have the lock. The isEmpty function attempts to \texttt{synchronize(lock)} which it is guaranteed to have. The false positive comes from the order in which the locks occur.
+\subsection{Coverity ID 10031}
+\textbf{Intentional} - The developer understands that they can assume there is a right subtree to rotate upon, by the choice of making rotate right a private function to be called only through the function that balances the tree. If the tree must be balanced, then there must exist a subtree for the right branch.
+\subsection{Coverity ID 10032}
+\textbf{Bug} - This is because if the threads both entered the while loop , then one of the threads locked the bucket, performed its \texttt{hasnext} function, then unlocks the bucket. The other thread returns to inside the while loop, while it is possible that \texttt{bucket++} is null. Then it will dereference null, causing an error.
+\subsection{Coverity ID 10033}
+\textbf{False Positive} - This function is intentionally creating a reverse mapping from the original mapping, it is not a bug.
+\subsection{Coverity ID 10034}
+\textbf{Bug} - The report for CID 10034 is the same as the bug report for CID 10032, and all the suggestions for fixing the bug are the same.
+\subsection{Coverity ID 10035}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 1221 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10036}
+\textbf{Bug} - This code block is entered under the assumption that \texttt{lastReturned} is not null. When two threads check for null at the same time and pass, one thread will lock before the other, set the value of \texttt{lastReturned} to null, unlock and let the other thread in. Then the other thread will hit line 767 and dereference null. A suggested fix is to put the null check inside the lock to ensure we do not dereference null.
+\subsection{Coverity ID 10037}
+\textbf{Intentional} - The function can be modified to perform a null check on the left subtree before dereferencing it. The developer assumes that the \texttt{rotateRight} function is called when a left subtree exists. This leaves the user to perform these checks before calling, or to handle \texttt{nullPointerExceptions}.
+\subsection{Coverity ID 10038}
+\textbf{Bug} - Most other examples will just call \texttt{synchronize(lock)}. If this instance gets the lock on \texttt{lock} after \texttt{synchronize(list)}, then there is a large chance to deadlock when others hold the lock on \texttt{lock}. The suggested fix is to be applied around line 1135 is to lock on \texttt{lock} first.
+\subsection{Coverity ID 10039}
+\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} call, the returned value will not be null.
+\subsection{Coverity ID 10040}
+\textbf{False Positive} - By inspecting other similar code snippets, the order of the locks occur with \texttt{synchronized(map)} followed by \texttt{synchronized(lock)}. Then no locking order is violated and no deadlock will occur.
+\subsection{Coverity ID 10041}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
+\subsection{Coverity ID 10042}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
+
+\section{Part II - B}
+\subsection{Coverity ID 10363 - Uninitialized Pointer Read}
+This coverity found defect suggests that a pointer has not been initialized by the time it is used for comparison while parsing input (the call graph). This will arise when the case statement in the main while loop goes to \texttt{case CALL} first. With well-formed input, this should never happen. It is expectected to enter the \texttt{NODE} case first, initializing the \texttt{current\_function} pointer.
+
+\subsection{Coverity ID 10362 - Uncaught Exception}
+When using the boost library's string formatter, it could throw an exception for too many or too few arguments. This is not a real problem because we can deduce the exact number of arguments required for the formatted string. Then the exceptions will not be thrown and explicit exception handling is not required.
+
+\end{document}
