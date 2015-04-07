@@ -119,6 +119,31 @@ void ap_core_reorder_directories(apr_pool_t *p, server_rec *s)
 	}
 \end{lstlisting}
 
-This bug line does represents a false positive. The function qsort is used to sort a set of object, while strcmp is used to compare strings - this means that if the objects that are to be sorted do not rely on strings for ordering, then there would be no reason to use the strcmp function, which is the case here - this function is sorting elts which are not or do not rely on string comparrisons.
+This bug line does represents a false positive. The function qsort is used to sort a set of object, while strcmp is used to compare strings - this means that if the objects that are to be sorted do not rely on strings for ordering, then there would be no reason to use the strcmp function, which is the case here - this function is sorting elts which are not or do not rely on string comparrisons.\\
+\section*{Question 2a}
+
+\subsection*{Coverity ID 10029}
+The bug report for CID 10029 is a bug. This is because one of thread 1 or thread 2 will modify the \texttt{lastReturned} value to null, then when thread 1 or 2 continues resolution, it will dereference \texttt{lastReturned}, then throw an exception. This is a bug that can be fixed by checking the \texttt{lastReturned} value before dereferencing it.
+
+\subsection*{Coverity ID 10030}
+The bug report for CID 10030 is a false positive because the lock on \texttt{lock} is guaranteed before entering the \texttt{isEmpty} function. Since the last lock that the \texttt{isEmpty} requires is \texttt{lock}.
+
+\subsection*{Coverity ID 10031}
+The bug report for CID 10031 is an intentional bug. The developer understands that they can assume there is a right subtree to rotate upon, by the choice of making rotate right a private function to be called only through the function that balances the tree. If the tree must be balanced, then there must exist a subtree for the right branch.
+
+\subsection*{Coverity ID 10032}
+The bug report for CID 10031 is a bug. This is because if the threads both entered the while loop , then one of the threads locked the bucket, performed its \texttt{hasnext} function, then unlocks the bucket. The other thread returns to inside the while loop, while it is possible that \texttt{bucket++} is null. Then it will dereference null, causing an error.
+
+\subsection*{Coverity ID 10033}
+The bug report for CID 10033 is a false positive. This function is intentionally creating a reverse mapping from the original mapping, it is not a bug.
+
+\subsection{Coverity ID 10034}
+The bug report for CID 10034 is the same as the bug report for CID 10032, and all the suggestions for fixing the bug are the same.
+
+\subsection*{Coverity ID 10035}
+I DONT KNOW D:
+
+
+
 
 \end{document}
