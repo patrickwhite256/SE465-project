@@ -1,0 +1,57 @@
+{
+  "cov-analyze" : {
+    time : 25,
+    "line-counts" : {
+      "C/C++" : {
+        "blank-lines" : 16806,
+        "code-lines" : 76386,
+        "comment-lines" : 27027
+      },
+      Java : {
+        "blank-lines" : 0,
+        "code-lines" : 0,
+        "comment-lines" : 0
+      },
+      "C#" : {
+        "blank-lines" : 0,
+        "code-lines" : 0,
+        "comment-lines" : 0
+      }
+    },
+    ident : "7.6.0 (build 9b77a50df0 p-harmony-push-21098.563)",
+    platform : "Linux 2.6.18-402.el5 x86_64",
+    "short-platform" : "linux64",
+    extver : "7.6.0",
+    intver : "9b77a50df0 p-harmony-push-21098.563",
+    "aw-peak-mem-bytes" : 62312448,
+    "am+aw-peak-mem-bytes" : 64569344,
+    "bytecode-functions" : 0,
+    concurrency : true,
+    cxx : true,
+    "enable-parse-warings" : true,
+    failures : 0,
+    "files-analyzed" : 91,
+    force : false,
+    "function-metrics-count" : 846,
+    "functions-analyzed" : 846,
+    "incremental-hits" : 0,
+    "incremental-misses" : 3384,
+    "max-mem" : 512,
+    "memout-count" : 0,
+    "pathout-count" : 0,
+    paths : 5000,
+    "paths-analyzed" : 5708,
+    "peak-mem-bytes" : 72044544,
+    security : true,
+    "tus-count" : 4,
+    "string-graph-nodes" : 0,
+    "web-app-entry-points" : 0,
+    "web-app-views-unused" : 0,
+    "ta.code_age_thresholds" : "0, 0",
+    "enabled-checkers" : "ALLOC_FREE_MISMATCH ARRAY_VS_SINGLETON ASSERT_SIDE_EFFECT ATOMICITY BAD_ALLOC_ARITHMETIC BAD_ALLOC_STRLEN BAD_CHECK_OF_WAIT_COND BAD_COMPARE BAD_EQ BAD_EQ_TYPES BAD_FREE BAD_LOCK_OBJECT BAD_OVERRIDE BAD_SHIFT BAD_SIZEOF BUFFER_SIZE CALL_SUPER CHAR_IO CHECKED_RETURN CHROOT COM.ADDROF_LEAK COM.BAD_FREE COM.BSTR.ALLOC COM.BSTR.BAD_COMPARE COM.BSTR.CONV COM.BSTR.NE_NON_BSTR CONSTANT_EXPRESSION_RESULT COPY_PASTE_ERROR CTOR_DTOR_LEAK DC.DANGEROUS DC.DEADLOCK DC.STREAM_BUFFER DC.WEAK_CRYPTO DEADCODE DELETE_ARRAY DELETE_VOID DIVIDE_BY_ZERO EVALUATION_ORDER FB.* FORWARD_NULL GUARDED_BY_VIOLATION HIBERNATE_BAD_HASHCODE IDENTICAL_BRANCHES INCOMPATIBLE_CAST INFINITE_LOOP INTEGER_OVERFLOW INVALIDATE_ITERATOR LOCK LOCK_EVASION LOCK_INVERSION MISMATCHED_ITERATOR MISSING_BREAK MISSING_COMMA MISSING_LOCK MISSING_RESTORE MISSING_RETURN MISSING_THROW MIXED_ENUMS NEGATIVE_RETURNS NESTING_INDENT_MISMATCH NON_STATIC_GUARDING_STATIC NO_EFFECT NULL_RETURNS OPEN_ARGS ORDER_REVERSAL ORM_LOAD_NULL_CHECK ORM_UNNECESSARY_GET OVERFLOW_BEFORE_WIDEN OVERRUN PARSE_ERROR PASS_BY_VALUE PW.* READLINK REGEX_CONFUSION RESOURCE_LEAK RETURN_LOCAL REVERSE_INULL REVERSE_NEGATIVE RISKY_CRYPTO SECURE_TEMP SERVLET_ATOMICITY SIGN_EXTENSION SINGLETON_RACE SIZEOF_MISMATCH SLEEP STACK_USE STRAY_SEMICOLON STREAM_FORMAT_STATE STRING_NULL STRING_OVERFLOW STRING_SIZE SWAPPED_ARGUMENTS TAINTED_SCALAR TAINTED_STRING TOCTOU UNCAUGHT_EXCEPT UNINIT UNINIT_CTOR UNINTENDED_INTEGER_DIVISION UNREACHABLE UNUSED_VALUE USELESS_CALL USE_AFTER_FREE VARARGS VIRTUAL_DTOR VOLATILE_ATOMICITY WRAPPER_ESCAPE WRONG_METHOD",
+    "MISSING_BREAK-new-defect-count" : 2,
+    "UNCAUGHT_EXCEPT-new-defect-count" : 2,
+    "UNINIT-new-defect-count" : 1,
+    "total-new-defect-count" : 5
+  }
+}

@@ -1,0 +1,272 @@
+timer                                            ms      calls
+--------------------------------------------------------------
+sequential initialization                       249          1
+  Looking for translation units                   1          1
+  Computing links for translation units          49          1
+  xfer symbol cache                              12          1
+  Computing virtual overrides                    20          1
+  Computing callgraph                            59          1
+  Topologically sorting functions                11          1
+  (left over)                                    97
+Computing node costs                             15          1
+Analysis run                                  24113          1
+  loadFromEmit                                 1658       3404
+    RELAX_NULL_RETURN                             2        846
+    RELAX_ALLOC                                   0        846
+    LOCK_FINDER                                  74        888
+    LOCK_ORDER                                  117        846
+    MISSING_LOCK_pass1                          103       1460
+    ORDER_REVERSAL_pass1                         57       1732
+    ARRAY_VS_SINGLETON_pass1                     45        866
+    CHECKED_RETURN_pass1                          8        866
+    NULL_RETURNS_pass1                            2        866
+    CTOR_DTOR_LEAK_pass1                          1        866
+      CTOR_DTOR_LEAK_pass1                        1        866
+    UNINIT_CTOR_pass1                             1        866
+    (left over)                                1248
+  ADDR_ARG_STAT                                   0          1
+  CHECKED_RETURN_STAT                             0          1
+  DERIVE_PTR_ARITH                                0          1
+  DUMMY_DERIVER_CONCURRENCY                       0          1
+  DUMMY_DERIVER_EXCEPTIONS                        0          1
+  DUMMY_DERIVER_PTR_ARITH                         0          1
+  DUMMY_DERIVER_SECURITY                          0          1
+  DUMMY_DERIVER_STACK_USE                         0          1
+  DUMMY_DERIVER_UNINIT                            0          1
+  IFACE_TRACKER                                   0          5
+  RELAX_ACCESS_DBUFFER                            0          1
+  RELAX_AFM_ALLOC                                 0          1
+  RELAX_AFM_FREE                                  0          1
+  RELAX_ALLOC                                     0          1
+  RELAX_BLOCK_FN                                  0          1
+  RELAX_BUFFER_SIZE                               0          1
+  RELAX_CHECKED_RETURN                            0          1
+  RELAX_CRYPTO_PRIMITIVES                         0          1
+  RELAX_DELETE_ARRAY                              0          1
+  RELAX_DEREF_ARGS                                0          1
+  RELAX_DIVISOR                                   0          1
+  RELAX_FORMAT_STRING_SINK                        0          1
+  RELAX_FREED_ARGS                                0          1
+  RELAX_GETLOCK                                   0          1
+  RELAX_INDEX_GENERIC                             0          1
+  RELAX_INDEX_STATIC                              0          1
+  RELAX_LOCKS                                     0          1
+  RELAX_MAYREAD_NONPTR_FIELDS                     0          1
+  RELAX_MAYWRITE                                  0          1
+  RELAX_MAYWRITE_ALL_FIELDS                       0          1
+  RELAX_MAYWRITE_NONPTR_FIELDS                    0          1
+  RELAX_MAYWRITE_NONPTR_FIELDS_UNINIT             0          1
+  RELAX_NEGATIVE_RETURN                           0          1
+  RELAX_NEGATIVE_SINK                             0          1
+  RELAX_NEW_ARRAY                                 0          1
+  RELAX_NOTHING                                   0          1
+  RELAX_NULL_RETURN                               0          1
+  RELAX_PARAM_NAMES                               0          1
+  RELAX_READ                                      0          1
+  RELAX_SIDE_EFFECT_FREE                          0          1
+  RELAX_STACK_USE                                 0          1
+  RELAX_STRING_NULL_ARGUMENT                      0          1
+  RELAX_STRING_NULL_RETURN                        0          1
+  RELAX_STRING_NULL_SINK                          0          1
+  RELAX_STRING_NULL_SINK_VARARG                   0          1
+  RELAX_STRING_SIZE_RETURN                        0          1
+  RELAX_STRING_SIZE_SANITIZE                      0          1
+  RELAX_STRING_SIZE_SINK                          0          1
+  RELAX_STRING_SIZE_SINK_VARARG                   0          1
+  RELAX_TAINTED_DATA_ARGUMENT                     0          1
+  RELAX_TAINTED_DATA_INDEX                        0          1
+  RELAX_TAINTED_DATA_RETURN                       0          1
+  RELAX_TAINTED_DATA_SANITIZE                     0          1
+  RELAX_TAINTED_DATA_SINK                         0          1
+  RELAX_TAINTED_DATA_TRANSITIVE                   0          1
+  RELAX_TAINTED_DATA_TRANSITIVE_VARARG            0          1
+  RELAX_TAINTED_STRING_ARGUMENT                   0          1
+  RELAX_TAINTED_STRING_RETURN_CONTENT             0          1
+  RELAX_TAINTED_STRING_SANITIZE_CONTENT           0          1
+  RELAX_TAINTED_STRING_SINK_CONTENT               0          1
+  RELAX_UNCAUGHT_EXCEPT                           0          1
+  RELAX_UNINIT_ALLOC                              0          1
+  RELAX_WRITE                                     0          1
+  RELAX_WRITE_SECURITY                            0          1
+  RELAX_ZERO_RETURN                               0          1
+  LOCK_FINDER                                     0          1
+  LOCK_ORDER                                      0          1
+  CRYPTO                                          0        847
+  VIRTUAL_DTOR                                    0          3
+  ASSERT_SIDE_EFFECT                              0          1
+  BAD_ALLOC_ARITHMETIC                            0          1
+  BAD_ALLOC_STRLEN                                0          1
+  BAD_COMPARE                                     0          1
+  BAD_SIZEOF                                      0          1
+  CHAR_IO                                         0          1
+  COM.BSTR.BAD_COMPARE                            0          1
+  COM.BSTR.CONV                                   0          1
+  COM.BSTR.NE_NON_BSTR                            0          1
+  CONSTANT_EXPRESSION_RESULT                      0          1
+  COPY_PASTE_ERROR                                0          1
+  DC.STREAM_BUFFER                                0          1
+  DC.WEAK_CRYPTO                                  0          1
+  DELETE_VOID                                     0          1
+  EVALUATION_ORDER                                0          1
+  IDENTICAL_BRANCHES                              0          1
+  INCOMPATIBLE_CAST                               0          1
+  INFINITE_LOOP                                   0          1
+  INTEGER_OVERFLOW                                0          1
+  INVALIDATE_ITERATOR                             0          1
+  MISSING_BREAK                                   0          1
+  MISSING_COMMA                                   0          1
+  MIXED_ENUMS                                     0          1
+  NESTING_INDENT_MISMATCH                         0          1
+  NO_EFFECT                                       0          1
+  OPEN_ARGS                                       0          1
+  PASS_BY_VALUE                                   0          1
+  REVERSE_INULL                                   0          1
+  RISKY_CRYPTO                                    0          1
+  SIGN_EXTENSION                                  0          1
+  SIZEOF_MISMATCH                                 0          1
+  STACK_USE                                       0          1
+  STRAY_SEMICOLON                                 0          1
+  SWAPPED_ARGUMENTS                               0          1
+  UNCAUGHT_EXCEPT                                 0          1
+  UNINTENDED_INTEGER_DIVISION                     0          1
+  UNREACHABLE                                     0          1
+  UNUSED_VALUE                                    0          1
+  USELESS_CALL                                    0          1
+types/warning pass                               28          1
+  BAD_OVERRIDE                                    0          1
+  MISSING_COMMA_GLOBAL                            0          1
+  PARSE_ERROR                                     0          1
+  PW.*                                            0          1
+
+activity                                         ms      calls
+--------------------------------------------------------------
+RELAX_BLOCK_FN                                    0          1
+RELAX_GETLOCK                                     0          1
+RELAX_LOCKS                                       0          1
+DUMMY_DERIVER_CONCURRENCY                         0          1
+IFACE_TRACKER                                     0          5
+LOCK_FINDER                                      74        889
+LOCK_ORDER                                      117        847
+ARRAY_VS_SINGLETON_pass1                         45        866
+ASSERT_SIDE_EFFECT                                0          1
+BAD_ALLOC_ARITHMETIC                              0          1
+BAD_ALLOC_STRLEN                                  0          1
+BAD_COMPARE                                       0          1
+BAD_SIZEOF                                        0          1
+CHAR_IO                                           0          1
+CHECKED_RETURN_pass1                              8        866
+COM.BSTR.BAD_COMPARE                              0          1
+COM.BSTR.CONV                                     0          1
+COM.BSTR.NE_NON_BSTR                              0          1
+CONSTANT_EXPRESSION_RESULT                        0          1
+COPY_PASTE_ERROR                                  0          1
+CRYPTO                                            0        847
+RISKY_CRYPTO                                      0          1
+CTOR_DTOR_LEAK_pass1                              2       1732
+DELETE_VOID                                       0          1
+EVALUATION_ORDER                                  0          1
+IDENTICAL_BRANCHES                                0          1
+INCOMPATIBLE_CAST                                 0          1
+INFINITE_LOOP                                     0          1
+INTEGER_OVERFLOW                                  0          1
+INVALIDATE_ITERATOR                               0          1
+MISSING_BREAK                                     0          1
+MISSING_COMMA                                     0          1
+MISSING_LOCK_pass1                              103       1460
+MIXED_ENUMS                                       0          1
+NESTING_INDENT_MISMATCH                           0          1
+NO_EFFECT                                         0          1
+NULL_RETURNS_pass1                                2        866
+OPEN_ARGS                                         0          1
+ORDER_REVERSAL_pass1                             57       1732
+PASS_BY_VALUE                                     0          1
+REVERSE_INULL                                     0          1
+SIGN_EXTENSION                                    0          1
+SIZEOF_MISMATCH                                   0          1
+STACK_USE                                         0          1
+STRAY_SEMICOLON                                   0          1
+SWAPPED_ARGUMENTS                                 0          1
+UNCAUGHT_EXCEPT                                   0          1
+UNINIT_CTOR_pass1                                 1        866
+UNINTENDED_INTEGER_DIVISION                       0          1
+UNREACHABLE                                       0          1
+UNUSED_VALUE                                      0          1
+USELESS_CALL                                      0          1
+VIRTUAL_DTOR                                      0          3
+DC.WEAK_CRYPTO                                    0          1
+DC.STREAM_BUFFER                                  0          1
+RELAX_ACCESS_DBUFFER                              0          1
+RELAX_AFM_ALLOC                                   0          1
+RELAX_AFM_FREE                                    0          1
+RELAX_ALLOC                                       0        847
+RELAX_BUFFER_SIZE                                 0          1
+RELAX_CHECKED_RETURN                              0          1
+RELAX_DEREF_ARGS                                  0          1
+RELAX_DIVISOR                                     0          1
+RELAX_FREED_ARGS                                  0          1
+RELAX_INDEX_GENERIC                               0          1
+RELAX_INDEX_STATIC                                0          1
+RELAX_MAYWRITE_NONPTR_FIELDS                      0          1
+RELAX_ZERO_RETURN                                 0          1
+RELAX_NEGATIVE_RETURN                             0          1
+RELAX_NEGATIVE_SINK                               0          1
+RELAX_NULL_RETURN                                 2        847
+RELAX_WRITE                                       0          1
+RELAX_NEW_ARRAY                                   0          1
+RELAX_DELETE_ARRAY                                0          1
+RELAX_NOTHING                                     0          1
+DERIVE_PTR_ARITH                                  0          1
+DUMMY_DERIVER_PTR_ARITH                           0          1
+RELAX_FORMAT_STRING_SINK                          0          1
+RELAX_TAINTED_DATA_RETURN                         0          1
+RELAX_TAINTED_DATA_ARGUMENT                       0          1
+RELAX_TAINTED_DATA_SINK                           0          1
+RELAX_TAINTED_DATA_INDEX                          0          1
+RELAX_TAINTED_DATA_SANITIZE                       0          1
+RELAX_TAINTED_DATA_TRANSITIVE                     0          1
+RELAX_TAINTED_DATA_TRANSITIVE_VARARG              0          1
+RELAX_TAINTED_STRING_RETURN_CONTENT               0          1
+RELAX_TAINTED_STRING_ARGUMENT                     0          1
+RELAX_TAINTED_STRING_SINK_CONTENT                 0          1
+RELAX_TAINTED_STRING_SANITIZE_CONTENT             0          1
+RELAX_STRING_SIZE_RETURN                          0          1
+RELAX_STRING_SIZE_SANITIZE                        0          1
+RELAX_STRING_SIZE_SINK                            0          1
+RELAX_STRING_SIZE_SINK_VARARG                     0          1
+RELAX_STRING_NULL_ARGUMENT                        0          1
+RELAX_STRING_NULL_RETURN                          0          1
+RELAX_STRING_NULL_SINK                            0          1
+RELAX_STRING_NULL_SINK_VARARG                     0          1
+RELAX_WRITE_SECURITY                              0          1
+RELAX_CRYPTO_PRIMITIVES                           0          1
+DUMMY_DERIVER_SECURITY                            0          1
+RELAX_STACK_USE                                   0          1
+RELAX_PARAM_NAMES                                 0          1
+RELAX_SIDE_EFFECT_FREE                            0          1
+DUMMY_DERIVER_STACK_USE                           0          1
+RELAX_MAYWRITE                                    0          1
+RELAX_MAYWRITE_NONPTR_FIELDS_UNINIT               0          1
+RELAX_MAYWRITE_ALL_FIELDS                         0          1
+RELAX_READ                                        0          1
+RELAX_MAYREAD_NONPTR_FIELDS                       0          1
+RELAX_UNINIT_ALLOC                                0          1
+DUMMY_DERIVER_UNINIT                              0          1
+RELAX_UNCAUGHT_EXCEPT                             0          1
+DUMMY_DERIVER_EXCEPTIONS                          0          1
+CHECKED_RETURN_STAT                               0          1
+ADDR_ARG_STAT                                     0          1
+BAD_OVERRIDE                                      0          1
+PARSE_ERROR                                       0          1
+PW.*                                              0          1
+MISSING_COMMA_GLOBAL                              0          1
+sequential initialization                       249          1
+Looking for translation units                     1          1
+Computing links for translation units            49          1
+xfer symbol cache                                12          1
+Computing virtual overrides                      20          1
+Computing callgraph                              59          1
+Topologically sorting functions                  11          1
+Computing node costs                             15          1
+Analysis run                                  24113          1
+loadFromEmit                                   1658       3404
+types/warning pass                               28          1

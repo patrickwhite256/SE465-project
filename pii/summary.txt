@@ -1,0 +1,14 @@
+/usr/local/cov-analysis-7.6.0/bin/cov-analyze --dir /home/ps2white/coverity-idirs/g68-pipair -c /home/ps2white/coverity_config.xml --include-java -j auto --disable-webapp-security --strip-path /home/ps2white/qaproj/SE465-project/pi --all --enable-fb 
+Analysis summary report:
+------------------------
+Files analyzed                 : 91
+Total LoC input to cov-analyze : 76386
+Functions analyzed             : 846
+Classes/structs analyzed       : 249
+Paths analyzed                 : 5708
+Time taken by analysis         : 00:00:25
+Defect occurrences found       : 5 Total
+                                 2 MISSING_BREAK
+                                 2 UNCAUGHT_EXCEPT
+                                 1 UNINIT
+

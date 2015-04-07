@@ -1,0 +1,76 @@
+<error>
+<domain>STATIC_C</domain>
+<checker>UNCAUGHT_EXCEPT</checker>
+<file>/home/ps2white/qaproj/SE465-project/pi/pipair.cpp</file>
+<function>main</function>
+<score>100</score>
+<ordered>false</ordered>
+<event>
+<main>true</main>
+<tag>root_function</tag>
+<description>{CovLStrv2{{t{In function {0} an exception of type {1} is thrown and never caught.}{{code{main(int, char **)}}}{{code{boost::io::too_few_args const}}}}}}</description>
+<line>22</line>
+</event>
+<event>
+<tag>fun_call_w_exception</tag>
+<description>{CovLStrv2{{t{Called function throws an exception of type {0}.}{{code{boost::io::too_few_args const}}}}}}</description>
+<line>57</line>
+<model_ptr>
+<module>module</module>
+<property>prop</property>
+<file>/home/ps2white/qaproj/SE465-project/pi/function.cpp</file>
+<function>_ZN8Function8findBugsEif</function>
+<key>5d422290b84f661582048c1ed966527b</key>
+<id>1</id>
+</model_ptr>
+</event>
+<extra>too_few_args</extra>
+<subcategory>none</subcategory>
+<typePropertiesGroup>
+<category>Error handling issues</category>
+<impact>Medium</impact>
+<type>Uncaught exception</type>
+<cwe>248</cwe>
+<localEffect>If the exception is ever thrown, the program will crash.</localEffect>
+<longDescription>A C++ exception is thrown but never caught</longDescription>
+<qualityKind>true</qualityKind>
+</typePropertiesGroup>
+</error>
+<error>
+<domain>STATIC_C</domain>
+<checker>UNCAUGHT_EXCEPT</checker>
+<file>/home/ps2white/qaproj/SE465-project/pi/pipair.cpp</file>
+<function>main</function>
+<score>100</score>
+<ordered>false</ordered>
+<event>
+<main>true</main>
+<tag>root_function</tag>
+<description>{CovLStrv2{{t{In function {0} an exception of type {1} is thrown and never caught.}{{code{main(int, char **)}}}{{code{boost::io::too_many_args const}}}}}}</description>
+<line>22</line>
+</event>
+<event>
+<tag>fun_call_w_exception</tag>
+<description>{CovLStrv2{{t{Called function throws an exception of type {0}.}{{code{boost::io::too_many_args const}}}}}}</description>
+<line>57</line>
+<model_ptr>
+<module>module</module>
+<property>prop</property>
+<file>/home/ps2white/qaproj/SE465-project/pi/function.cpp</file>
+<function>_ZN8Function8findBugsEif</function>
+<key>5d422290b84f661582048c1ed966527b</key>
+<id>2</id>
+</model_ptr>
+</event>
+<extra>too_many_args</extra>
+<subcategory>none</subcategory>
+<typePropertiesGroup>
+<category>Error handling issues</category>
+<impact>Medium</impact>
+<type>Uncaught exception</type>
+<cwe>248</cwe>
+<localEffect>If the exception is ever thrown, the program will crash.</localEffect>
+<longDescription>A C++ exception is thrown but never caught</longDescription>
+<qualityKind>true</qualityKind>
+</typePropertiesGroup>
+</error>
