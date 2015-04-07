@@ -125,35 +125,47 @@ This bug line does represents a false positive. The function qsort is used to so
 
 % Coverity on Apache Commons
 \section{Part II - A}
-\subsection{CID 10022}
-\textbf{False Positive} - All other instances that lead to this warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the KeySetView instance instead of a decorated set, which is a different scenario from the similar examples.
-\subsection{CID 10023}
-\textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent. In general, it is just poor practice and a suggested fix should be use a call to super like all the other similar calls.
-\subsection{CID 10024}
-\textbf{Intentional} - In the map that is being referenced is form a parent class. The other classes which make the call to super also does the same thing in the parent. In general, it is just poor practice and a suggested fix should be use a call to super like all the other similar calls.
-\subsection{CID 10025}
-\textbf{False Positive} - By tracing the branch through the inner methods, we see a line where currentIterator is dereferenced (line 186). At the start of the branching, we have currentIterator set to null. Once we enter the first nested method, we have the iterator variable in 'findNextByIterator' not null. The first if statement in the method will set currentIterator to iterator given our current state. Then after this block, currentIterator is no longer null, and no problems arise.
-\subsection{CID 10026}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable 'last' is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of 'last' recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to 'last' from multiple threads, causing undefined behaviour. The line in question is 852 and a suggested fix is to put it inside a 'synchronized' block.
-\subsection{CID 10027}
-\textbf{False Positive} - If deletedNode is null, then the bug would happen earlier. Since we only get to the flagged statement if deletedNode.getRight(index) != null, then inside the nextGreater call, the returned value will not be null.
-\subsection{CID 10028}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable 'last' is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of 'last' recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to 'last' from multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a 'synchronized' block.
-\subsection{CID 10035}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable 'last' is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of 'last' recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to 'last' from multiple threads, causing undefined behaviour. The line in question is 1221 and a suggested fix is to put it inside a 'synchronized' block.
-\subsection{CID 10036}
-\textbf{Bug} - This code block is entered under the assumptiong that lastReturned is not null. When two threads check for null at the same time and pass, one thread will lock before the other, set the value of lastReturned to null, unlock and let the other thread in. Then the other thread will hit line 767 and dereference null. A suggested fix is to put the null check inside the lock to ensure we do not dereference null.
-\subsection{CID 10037}
-\textbf{Intentional} - The function can be modified to perform a null check on the left subtree before dereferencing it. The developer assumes that the rotateRight function is called when a left subtree exists. This leaves the user to perform these checks before calling, or to handle nullPointerExceptions.
-\subsection{CID 10038}
-\textbf{Bug} - Most other examples will just call synchronize(lock). If this instance gets the lock on 'lock' after synchronize(list), then there is a large chance to deadlock when others hold the lock on 'lock'. Lines 1135. The suggested fix is to lock on 'lock' first.
-\subsection{CID 10039}
-\textbf{False Positive} - If deletedNode is null, then the bug would happen earlier. Since we only get to the flagged statement if deletedNode.getRight(index) != null, then inside the nextGreater call, the returned value will not be null.
-\subsection{CID 10040}
-\textbf{False Positive} - By inspecting other similar code snippets, the order of the locks occur with 'synchronized(map)' followed by 'synchronized(lock)'. Then no locking order is violated and no deadlock will occur.
-\subsection{CID 10041}
-\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, modCount does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. It is fine as is, but it would also work if the developer changed the type of modCount to not be volatile.
-\subsection{CID 10042}
-\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, modCount does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. It is fine as is, but it would also work if the developer changed the type of modCount to not be volatile.
+\subsection{Coverity ID 10022}
+\textbf{False Positive} - All other instances that lead to this warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the \texttt{KeySetView} instance instead of a decorated set, which is a different scenario from the similar examples.
+\subsection{Coverity ID 10023}
+\textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
+\subsection{Coverity ID 10024}
+\textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
+\subsection{Coverity ID 10025}
+\textbf{False Positive} - By tracing the branch through the inner methods, we see a line where \texttt{currentIterator} is dereferenced (line 186). At the start of the branching, we have \texttt{currentIterator} set to null. Once we enter the first nested method, we have the \texttt{iterator} variable in \texttt{findNextByIterator} not null. The first if statement in the method will set \texttt{currentIterator} to \texttt{iterator} given our current state. Then after this block, \texttt{currentIterator} is no longer null, and no problems arise.
+\subsection{Coverity ID 10026}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 852 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10027}
+\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} call, the returned value will not be null.
+\subsection{Coverity ID 10028}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10029}
+\textbf{Bug} - This is because one of thread 1 or thread 2 will modify the \texttt{lastReturned} value to null, then when thread 1 or 2 continues resolution, it will dereference \texttt{lastReturned}, then throw an exception. This is a bug that can be fixed by checking the \texttt{lastReturned} value before dereferencing it.
+\subsection{Coverity ID 10030}
+\textbf{False Positive} - because the lock on \texttt{lock} is guaranteed before entering the \texttt{isEmpty} function. Since the last lock that the \texttt{isEmpty} requires is \texttt{lock}.
+\subsection{Coverity ID 10031}
+\textbf{Intentional} - The developer understands that they can assume there is a right subtree to rotate upon, by the choice of making rotate right a private function to be called only through the function that balances the tree. If the tree must be balanced, then there must exist a subtree for the right branch.
+\subsection{Coverity ID 10032}
+\textbf{Bug} - This is because if the threads both entered the while loop , then one of the threads locked the bucket, performed its \texttt{hasnext} function, then unlocks the bucket. The other thread returns to inside the while loop, while it is possible that \texttt{bucket++} is null. Then it will dereference null, causing an error.
+\subsection{Coverity ID 10033}
+\textbf{False Positive} - This function is intentionally creating a reverse mapping from the original mapping, it is not a bug.
+\subsection{Coverity ID 10034}
+\textbf{Bug} - The report for CID 10034 is the same as the bug report for CID 10032, and all the suggestions for fixing the bug are the same.
+\subsection{Coverity ID 10035}
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 1221 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\subsection{Coverity ID 10036}
+\textbf{Bug} - This code block is entered under the assumption that \texttt{lastReturned} is not null. When two threads check for null at the same time and pass, one thread will lock before the other, set the value of \texttt{lastReturned} to null, unlock and let the other thread in. Then the other thread will hit line 767 and dereference null. A suggested fix is to put the null check inside the lock to ensure we do not dereference null.
+\subsection{Coverity ID 10037}
+\textbf{Intentional} - The function can be modified to perform a null check on the left subtree before dereferencing it. The developer assumes that the \texttt{rotateRight} function is called when a left subtree exists. This leaves the user to perform these checks before calling, or to handle \texttt{nullPointerExceptions}.
+\subsection{Coverity ID 10038}
+\textbf{Bug} - Most other examples will just call \texttt{synchronize(lock)}. If this instance gets the lock on \texttt{lock} after \texttt{synchronize(list)}, then there is a large chance to deadlock when others hold the lock on \texttt{lock}. The suggested fix is to be applied around line 1135 is to lock on \texttt{lock} first.
+\subsection{Coverity ID 10039}
+\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} call, the returned value will not be null.
+\subsection{Coverity ID 10040}
+\textbf{False Positive} - By inspecting other similar code snippets, the order of the locks occur with \texttt{synchronized(map)} followed by \texttt{synchronized(lock)}. Then no locking order is violated and no deadlock will occur.
+\subsection{Coverity ID 10041}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
+\subsection{Coverity ID 10042}
+\textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
 
 \end{document}
