@@ -1,0 +1,71 @@
+<error>
+<domain>STATIC_C</domain>
+<checker>UNINIT</checker>
+<file>/home/ps2white/qaproj/SE465-project/pi/pipair.cpp</file>
+<function>main</function>
+<score>100</score>
+<ordered>true</ordered>
+<event>
+<tag>var_decl</tag>
+<description>{CovLStrv2{{t{Declaring variable {0} without initializer.}{{code{current_function}}}}}}</description>
+<line>48</line>
+</event>
+<event>
+<tag>cond_true</tag>
+<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{argc &gt;= 3}}}}}}</description>
+<line>40</line>
+<path_event></path_event>
+</event>
+<event>
+<tag>cond_true</tag>
+<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{argc == 4}}}}}}</description>
+<line>44</line>
+<path_event></path_event>
+</event>
+<event>
+<tag>cond_true</tag>
+<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{!std::cin.eof()}}}}}}</description>
+<line>50</line>
+<path_event></path_event>
+</event>
+<event>
+<tag>cond_true</tag>
+<description>{CovLStrv2{{t{Condition {0}, taking true branch}{{code{line.length() &gt; 0}}}}}}</description>
+<line>52</line>
+<path_event></path_event>
+</event>
+<event>
+<tag>switch</tag>
+<description>{CovLStrv2{{t{Switch case value {0}}{{code{CALL}}}}}}</description>
+<line>54</line>
+<path_event>
+<jump>true</jump>
+</path_event>
+</event>
+<event>
+<tag>switch_case</tag>
+<description>{CovLStrv2{{t{Reached case {0}}{{code{CALL}}}}}}</description>
+<line>60</line>
+<path_event>
+<suppressible>true</suppressible>
+</path_event>
+</event>
+<event>
+<main>true</main>
+<tag>uninit_use</tag>
+<description>{CovLStrv2{{t{Using uninitialized value {0}.}{{code{current_function}}}}}}</description>
+<line>61</line>
+</event>
+<extra>current_function</extra>
+<subcategory>pointer_deref_read</subcategory>
+<typePropertiesGroup>
+<category>Memory - illegal accesses</category>
+<impact>High</impact>
+<type>Uninitialized pointer read</type>
+<cwe>457</cwe>
+<localEffect>Incorrect values could be read from, or even written to, an arbitrary memory location, causing incorrect computations.</localEffect>
+<longDescription>Reads an uninitialized pointer or its target</longDescription>
+<qualityKind>true</qualityKind>
+<securityKind>true</securityKind>
+</typePropertiesGroup>
+</error>
