@@ -2,3 +2,6 @@
 *.d
 *.bc
 pipair-core
+*.aux
+*.log
+*.gz
