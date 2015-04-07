@@ -20,7 +20,7 @@ class Function {
     std::string getName();
     void addSupport(std::string);
     void addCalls(std::string);
-    void createExpandedCalls();
+    void createExpandedCalls(int);
     std::unordered_set<std::string> *getExpandedCalls();
     int getSupport(std::string);
     std::unordered_map<std::string, int> *getSupportMap();

@@ -60,10 +60,8 @@ void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
 
     for(auto it = functions.begin(); it != functions.end(); ++it){
         func = &(it->second);
-        unordered_set<string> calls = func->calls;
-        if(expand_nodes) calls = func->expandedCalls;
-        for(auto inner_it = calls.begin();
-                inner_it != calls.end();
+        for(auto inner_it = func->calls.begin();
+                inner_it != func->calls.end();
                 ++inner_it){
             inner_func = getFunction(*inner_it);
             //for each called function, check if its friends are called
@@ -71,6 +69,8 @@ void Function::findBugs(int t_support, float t_confidence, bool expand_nodes){
                     friend_it != inner_func->friendships.end();
                     ++friend_it){
                 string friendName = friend_it->friendName;
+                unordered_set<string> calls = func->calls;
+                if(expand_nodes) calls = func->expandedCalls;
                 if(calls.find(friendName) == calls.end()){
                     string firstName = *inner_it;
                     string secondName = friendName;
@@ -98,9 +98,10 @@ Function *Function::getFunction(string functionName){
     return &functions[functionName];
 }
 
-void Function::createExpandedCalls(){
+void Function::createExpandedCalls(int expand_level){
     unordered_set<Function *> seen;
     unordered_set<Function *> current;
+    int current_level = 0;
     //BFS to find all functions called together
     //initialize with all called functions of this
     for(auto it = this->calls.begin();
@@ -109,7 +110,7 @@ void Function::createExpandedCalls(){
         current.insert(Function::getFunction(*it));
         seen.insert(Function::getFunction(*it));
     }
-    while(!current.empty()){
+    while(!current.empty() && (expand_level == 0 || expand_level > current_level)){
         unordered_set<Function *> next;
         for(auto it = current.begin();
                 it != current.end();
@@ -125,6 +126,7 @@ void Function::createExpandedCalls(){
             }
         }
         current = next;
+        ++current_level;
     }
     //f's calls has been expanded into one flat list of functions called together
     for(auto it = seen.begin();

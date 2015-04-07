@@ -36,13 +36,13 @@ void create_support(unordered_set<string> *function_set){
 int main(int argc, char **argv){
     int t_support = 3;
     float t_confidence = 0.65;
-    bool expand_nodes = false;
+    int expand_level = -1;
     if(argc >= 3) {
         t_support = atoi(argv[1]);
         t_confidence = (float)atoi(argv[2]) / 100;
     }
     if (argc == 4) {
-        expand_nodes = true;
+        expand_level = atoi(argv[3]);
     }
     string line;
     Function *current_function;
@@ -53,7 +53,7 @@ int main(int argc, char **argv){
             LineData *ld = new LineData(line);
             switch(ld->getLineType()) {
                 case NODE:
-                    if(!expand_nodes){
+                    if(expand_level < 0){
                         create_support(&function_set);
                         function_set.clear();
                     }
@@ -74,15 +74,15 @@ int main(int argc, char **argv){
             delete ld;
         }
     }
-    if(!expand_nodes){
+    if(expand_level < 0){
         create_support(&function_set);
     } else {
         for(auto it = Function::getFunctions()->begin();
                 it != Function::getFunctions()->end();
                 ++it){
-            it->second.createExpandedCalls();
+            it->second.createExpandedCalls(expand_level);
             create_support(it->second.getExpandedCalls());
         }
     }
-    Function::findBugs(t_support, t_confidence, expand_nodes);
+    Function::findBugs(t_support, t_confidence, expand_level >= 0);
 }
