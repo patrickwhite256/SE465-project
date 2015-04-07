@@ -1,4 +1,4 @@
 #!/bin/bash
 CGFILE=$1.cg
 PIPAIR_EXEC=$(dirname $BASH_SOURCE)/pipair-core
-opt -print-callgraph $1 2>&1 > /dev/null | $PIPAIR_EXEC $2 $3 $4
+LD_LIBRARY_PATH=/usr/lib64 opt -print-callgraph $1 2>&1 > /dev/null | $PIPAIR_EXEC $2 $3 $4
