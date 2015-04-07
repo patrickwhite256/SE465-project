@@ -1,0 +1,60 @@
+<error>
+<domain>STATIC_C</domain>
+<checker>MISSING_BREAK</checker>
+<file>/usr/include/boost/format/parsing.hpp</file>
+<function>_ZN5boost2io6detail22parse_printf_directiveIcSt11char_traitsIcESaIcEN9__gnu_cxx17__normal_iteratorIPKcSsEESt5ctypeIcEEEbRT2_RKSD_PNS1_11format_itemIT_T0_T1_EERKT3_mh</function>
+<score>100</score>
+<ordered>false</ordered>
+<event>
+<main>true</main>
+<tag>unterminated_case</tag>
+<description>{CovLStrv2{{t{The case for value {0} is not terminated by a 'break' statement.}{{code{'X'}}}}}}</description>
+<line>260</line>
+</event>
+<event>
+<tag>fallthrough</tag>
+<description>{CovLStrv2{{t{The above case falls through to this one.}}}}</description>
+<line>262</line>
+</event>
+<extra>88</extra>
+<subcategory>none</subcategory>
+<typePropertiesGroup>
+<category>Control flow issues</category>
+<impact>Medium</impact>
+<type>Missing break in switch</type>
+<cwe>484</cwe>
+<localEffect>Execution falls through to the next case statement or default; this might indicate a common typo.</localEffect>
+<longDescription>Missing break statement between cases in switch statement</longDescription>
+<qualityKind>true</qualityKind>
+</typePropertiesGroup>
+</error>
+<error>
+<domain>STATIC_C</domain>
+<checker>MISSING_BREAK</checker>
+<file>/usr/include/boost/format/parsing.hpp</file>
+<function>_ZN5boost2io6detail22parse_printf_directiveIcSt11char_traitsIcESaIcEN9__gnu_cxx17__normal_iteratorIPKcSsEESt5ctypeIcEEEbRT2_RKSD_PNS1_11format_itemIT_T0_T1_EERKT3_mh</function>
+<score>100</score>
+<ordered>false</ordered>
+<event>
+<main>true</main>
+<tag>unterminated_case</tag>
+<description>{CovLStrv2{{t{The case for value {0} is not terminated by a 'break' statement.}{{code{'f'}}}}}}</description>
+<line>283</line>
+</event>
+<event>
+<tag>fallthrough</tag>
+<description>{CovLStrv2{{t{The above case falls through to this one.}}}}</description>
+<line>286</line>
+</event>
+<extra>102</extra>
+<subcategory>none</subcategory>
+<typePropertiesGroup>
+<category>Control flow issues</category>
+<impact>Medium</impact>
+<type>Missing break in switch</type>
+<cwe>484</cwe>
+<localEffect>Execution falls through to the next case statement or default; this might indicate a common typo.</localEffect>
+<longDescription>Missing break statement between cases in switch statement</longDescription>
+<qualityKind>true</qualityKind>
+</typePropertiesGroup>
+</error>

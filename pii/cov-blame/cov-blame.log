@@ -1,0 +1,10 @@
+[LOG] run: /usr/local/cov-analysis-7.6.0/bin/cov-format-errors --dir /home/ps2white/coverity-idirs/g68-pipair --json-output-v3 /home/ps2white/coverity-idirs/g68-pipair/output/cov-blame/errors.json
+[LOG] /usr/local/cov-analysis-7.6.0/bin/cov-format-errors exits successfully.
+[INFO] Computing likely owner for 10361 [b58657261641eeb9212ad51bbe2a7b1e]:
+[INFO] 	default_component_owner: none
+[INFO] Computing likely owner for 10362 [83f07aeb06f8b09c4100479bfbaed236]:
+[INFO] 	default_component_owner: none
+[INFO] Computing likely owner for 10359 [bc9f437e8dec10c61c6831d1c051f726]:
+[INFO] 	default_component_owner: none
+[INFO] Computing likely owner for 10360 [bcf57abe6184338a97d4a48aa4245a2c]:
+[INFO] 	default_component_owner: none
