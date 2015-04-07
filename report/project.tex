@@ -15,7 +15,7 @@
     text width=5em, text centered, rounded corners, minimum height=2em]
 
 \title{SE465-001 Project}
-\author{Sameer Ahmad (20458331) \and Patrick White (11111111) \and Andrew Yiu (20466096)}
+\author{Sameer Ahmad (20458331) \and Patrick White (20464876) \and Andrew Yiu (20466096)}
 \date{April 6, 2015}
 
 \begin{document}
@@ -23,7 +23,7 @@
 \maketitle
 
 \section{Part I - B}
-Bug 1 (6 line locations):
+Bug 1 (16 line locations):
 \begin{lstlisting}
 bug: apr_array_make in ap_init_virtual_host, pair: (apr_array_make, apr_array_push),
 support: 40, confidence: 86.96%
@@ -71,7 +71,7 @@ AP_CORE_DECLARE(const char *) ap_init_virtual_host(apr_pool_t *p,
 \end{lstlisting}
 
 This bug indicates a false positive. The bug reported by the static analysis tool states that calling apr\_array\_make without apr\_array\_push is considered a bug, given that in 86.96\% of uses of apr\_array\_make, the function will use apr\_array\_push as well. The reason that in this case the function does not call apr\_array\_push is because the array that is made is constructed with arguments that do not need pushed values. It is constructed on some values passed in and therefore needs no pushing to.\\\\
-Bug 2 (4 line locations):
+Bug 2 (2 line locations):
 \begin{lstlisting}
 bug: qsort in ap_core_reorder_directories, pair: (qsort, strcmp), support: 4,
 confidence: 66.67%
@@ -126,23 +126,23 @@ This bug line does represents a false positive. The function qsort is used to so
 % Coverity on Apache Commons
 \section{Part II - A}
 \subsection{Coverity ID 10022}
-\textbf{False Positive} - All other instances that lead to this warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the \texttt{KeySetView} instance instead of a decorated set, which is a different scenario from the similar examples.
+\textbf{False Positive} - All other instances that lead to this warning make use of a call to super for an object to pass to a decorator. In this case, it seems the developer only wanted to return the \texttt{KeySetView} instance instead of a decorated set, which is a different scenario from the similar examples resulting in a non-issue.
 \subsection{Coverity ID 10023}
 \textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
 \subsection{Coverity ID 10024}
 \textbf{Intentional} - In the function, the map that is being referenced is from a parent class (AbstractMapDecorator). The other classes which make the call to super also does the same thing in the parent class. A suggested fix should be use a call to super like all the other similar calls.
 \subsection{Coverity ID 10025}
-\textbf{False Positive} - By tracing the branch through the inner methods, we see a line where \texttt{currentIterator} is dereferenced (line 186). At the start of the branching, we have \texttt{currentIterator} set to null. Once we enter the first nested method, we have the \texttt{iterator} variable in \texttt{findNextByIterator} not null. The first if statement in the method will set \texttt{currentIterator} to \texttt{iterator} given our current state. Then after this block, \texttt{currentIterator} is no longer null, and no problems arise.
+\textbf{False Positive} - At the beginning of the flagged block, we have \texttt{currentIterator} equal null. After a few method calls, we see a point where \texttt{currentIterator} is dereferenced (line 186). Once we enter the first method, we have the \texttt{iterator} variable in \texttt{findNextByIterator} equal to not null. Then in the first if statement, \texttt{currentIterator} is set to \texttt{iterator}, which is a non-null value. Then when \texttt{currentIterator} is dereferenced, it is no longer null and we do not run into a \texttt{nullPointerException}.
 \subsection{Coverity ID 10026}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 852 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 852 and a suggested fix is to put it inside a \texttt{synchronized} block.
 \subsection{Coverity ID 10027}
-\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} call, the returned value will not be null.
+\textbf{False Positive} - If \texttt{deletedNode} is null, then the bug would happen earlier in the function block, which is not related to this function. Since we only get to the flagged statement if \texttt{deletedNode.getRight(index) != null}, then inside the \texttt{nextGreater} function call, we take the branch for \texttt{deletedNode.getRight(index) != null} and end up returning a non-null node. Then the value passed into swapPosition is valid and causes no exceptions.
 \subsection{Coverity ID 10028}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 1241 and a suggested fix is to put it inside a \texttt{synchronized} block.
 \subsection{Coverity ID 10029}
-\textbf{Bug} - This is because one of thread 1 or thread 2 will modify the \texttt{lastReturned} value to null, then when thread 1 or 2 continues resolution, it will dereference \texttt{lastReturned}, then throw an exception. This is a bug that can be fixed by checking the \texttt{lastReturned} value before dereferencing it.
+\textbf{Bug} - This is a bug with multi-threading because the first thread to reach the lock will modify the \texttt{lastReturned} value to null. When the next thread to reach the lock is able to enter the critical section, \texttt{lastReturned} will be null and line 664 will dereference \texttt{lastReturned}, causing a \texttt{nullPpinterException}. A proposed fix is to include the null check found on lines 656 to 658 inside the critical section.
 \subsection{Coverity ID 10030}
-\textbf{False Positive} - because the lock on \texttt{lock} is guaranteed before entering the \texttt{isEmpty} function. Since the last lock that the \texttt{isEmpty} requires is \texttt{lock}.
+\textbf{False Positive} - Because the lock on \texttt{lock} is guaranteed before entering the \texttt{isEmpty} function. This means that the calls within the isEmpty() function are guaranteed to have the lock. The isEmpty function attempts to \texttt{synchronize(lock)} which it is guaranteed to have. The false positive comes from the order in which the locks occur.
 \subsection{Coverity ID 10031}
 \textbf{Intentional} - The developer understands that they can assume there is a right subtree to rotate upon, by the choice of making rotate right a private function to be called only through the function that balances the tree. If the tree must be balanced, then there must exist a subtree for the right branch.
 \subsection{Coverity ID 10032}
@@ -152,7 +152,7 @@ This bug line does represents a false positive. The function qsort is used to so
 \subsection{Coverity ID 10034}
 \textbf{Bug} - The report for CID 10034 is the same as the bug report for CID 10032, and all the suggestions for fixing the bug are the same.
 \subsection{Coverity ID 10035}
-\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. Ontop of that, multiple reads and write could be done to \texttt{last} from multiple threads, causing undefined behaviour. The line in question is 1221 and a suggested fix is to put it inside a \texttt{synchronized} block.
+\textbf{Bug} - Since FastArrayList is a thread-safe data structure, and the variable \texttt{last} is not volatile, last is not expected to be modified from multiple threads. Without holding a lock before the modification, the value of \texttt{last} recorded before the increment could become stale. As well, multiple reads and writes to \texttt{last} can come from multiple threads, causing undefined behaviour. The line in question is 1221 and a suggested fix is to put it inside a \texttt{synchronized} block.
 \subsection{Coverity ID 10036}
 \textbf{Bug} - This code block is entered under the assumption that \texttt{lastReturned} is not null. When two threads check for null at the same time and pass, one thread will lock before the other, set the value of \texttt{lastReturned} to null, unlock and let the other thread in. Then the other thread will hit line 767 and dereference null. A suggested fix is to put the null check inside the lock to ensure we do not dereference null.
 \subsection{Coverity ID 10037}
@@ -167,5 +167,12 @@ This bug line does represents a false positive. The function qsort is used to so
 \textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
 \subsection{Coverity ID 10042}
 \textbf{Intentional} - This data structure is not a synchronized (thread-safe) type. Since this class is not intended to be synchronized, \texttt{modCount} does not need ot be handled as a volatile type, but the developer knowingly set it as a volatile type. A suggested change is to change the type of \texttt{modCount} to not be volatile.
+
+\section{Part II - B}
+\subsection{Coverity ID 10363 - Uninitialized Pointer Read}
+This coverity found defect suggests that a pointer has not been initialized by the time it is used for comparison while parsing input (the call graph). This will arise when the case statement in the main while loop goes to \texttt{case CALL} first. With well-formed input, this should never happen. It is expectected to enter the \texttt{NODE} case first, initializing the \texttt{current\_function} pointer.
+
+\subsection{Coverity ID 10362 - Uncaught Exception}
+When using the boost library's string formatter, it could throw an exception for too many or too few arguments. This is not a real problem because we can deduce the exact number of arguments required for the formatted string. Then the exceptions will not be thrown and explicit exception handling is not required.
 
 \end{document}
