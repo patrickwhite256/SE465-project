@@ -117,6 +117,8 @@ void Function::createExpandedCalls(int expand_level){
         current.insert(Function::getFunction(*it));
         seen.insert(Function::getFunction(*it));
     }
+
+    //actually running the BFS
     while(!current.empty() && (expand_level == 0 || expand_level > current_level)){
         unordered_set<Function *> next;
         for(auto it = current.begin();
