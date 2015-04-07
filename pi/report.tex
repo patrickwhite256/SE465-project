@@ -21,7 +21,9 @@ void D(){
 	C();
 }
 \end{verbatim}
-In this example, $support(\{A,B\})$ is still $0$ because $A$ and $B$ are never called together in the same function, even though $D$ becomes expanded so that its expanded call set is $\{A,B,C\}$. If they did affect each other's $support$ levels, $C$ would be considered to be a bug, since $D$
+In this example, $support(\{A,B\})$ is still $0$ because $A$ and $B$ are never called together in the same function, even though $D$ becomes expanded so that its expanded call set is $\{A,B,C\}$. If they did affect each other's $support$ levels, the appearance of $B$ in $C$ would be considered to be a bug, since the support of $A$ and $B$ would be $1$, but $B$ appears without $A$ in $C$.
+
+
 \subsection{Experiment}
 \subsection{Validity of Solution}
 \end{document}
